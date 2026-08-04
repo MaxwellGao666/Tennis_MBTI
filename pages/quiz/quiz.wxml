@@ -1,5 +1,7 @@
 <!--pages/quiz/quiz.wxml-->
 <view class="page">
+  <image class="bg" src="/images/bg/bg-quiz-court.png" mode="aspectFill"></image>
+
   <view class="progress-head">
     <text class="progress-text">第 {{index + 1}} / {{total}} 题</text>
     <view class="progress-track">
