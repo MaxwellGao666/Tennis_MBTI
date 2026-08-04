@@ -1,9 +1,11 @@
 /* pages/result/result.wxss */
 .page {
+  width: 100%;
   min-height: 100vh;
   padding: 0 40rpx 60rpx;
   background: var(--bg);
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .hero {
@@ -25,11 +27,13 @@
 }
 
 .block {
+  width: 100%;
   background: #fff;
   border-radius: 24rpx;
   padding: 36rpx 32rpx;
   margin-bottom: 28rpx;
   box-shadow: 0 8rpx 26rpx rgba(20, 83, 74, 0.06);
+  box-sizing: border-box;
 }
 .block-title {
   font-size: 33rpx;
@@ -64,6 +68,7 @@
 .star-head {
   display: flex;
   align-items: center;
+  width: 100%;
   margin-bottom: 24rpx;
 }
 .star-photo {
@@ -83,11 +88,12 @@
   color: #fff;
   background: linear-gradient(135deg, var(--court-green), var(--court-green-light));
 }
-.star-meta { flex: 1; min-width: 0; }
+.star-meta { flex: 1; min-width: 0; overflow: hidden; }
 .star-name {
   font-size: 38rpx;
   font-weight: 700;
   color: var(--text);
+  word-break: break-word;
 }
 .star-sub {
   margin-top: 8rpx;
@@ -111,10 +117,12 @@
 /* 性别切换：♀ 粉 / ♂ 蓝 */
 .gender-switch {
   display: flex;
+  width: 100%;
   background: #eef2f1;
   border-radius: 999rpx;
   padding: 8rpx;
   margin-bottom: 28rpx;
+  box-sizing: border-box;
 }
 .gender-opt {
   flex: 1;
@@ -136,19 +144,22 @@
 
 /* 操作区：2x2 网格 */
 .actions {
+  width: 100%;
   margin-top: 8rpx;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22rpx 24rpx;
+  box-sizing: border-box;
 }
 .act-btn {
-  width: 48.5%;
-  margin-bottom: 22rpx;
+  width: 100%;
+  margin: 0;
   padding: 24rpx 0;
   border-radius: 999rpx;
   font-size: 32rpx;
   font-weight: 600;
   text-align: center;
+  box-sizing: border-box;
 }
 .act-btn::after { border: none; }
 .act-btn.primary { background: var(--accent); color: #3a2c05; }
@@ -160,19 +171,22 @@
 }
 
 .foot {
+  width: 100%;
   text-align: center;
   font-size: 22rpx;
   color: #9aa8a4;
   margin: 16rpx 0 20rpx;
 }
 
-/* 离屏卡片画布 */
+/* 离屏卡片画布：彻底移出视口，避免影响布局/滚动 */
 .card-canvas {
   position: fixed;
-  left: 0;
+  left: -9999px;
   top: -9999px;
-  width: 360px;
-  height: 480px;
+  width: 1rpx;
+  height: 1rpx;
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* 打赏弹窗 */
@@ -187,10 +201,12 @@
 }
 .modal {
   width: 560rpx;
+  max-width: 80%;
   background: #fff;
   border-radius: 28rpx;
   padding: 48rpx 40rpx 40rpx;
   text-align: center;
+  box-sizing: border-box;
 }
 .modal-title { font-size: 36rpx; font-weight: 700; color: var(--text); }
 .qr-box { margin: 32rpx auto 12rpx; width: 320rpx; height: 320rpx; }
