@@ -1,15 +1,15 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/quiz/quiz",
+    "pages/result/result"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarBackgroundColor": "#ffffff"
+    "navigationBarTitleText": "网球 MBTI",
+    "navigationBarBackgroundColor": "#14534a",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f7f6"
   },
   "style": "v2",
-  "componentFramework": "glass-easel",
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "sitemapLocation": "sitemap.json"
 }

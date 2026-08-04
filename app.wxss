@@ -1,10 +1,17 @@
 /**app.wxss**/
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
+page {
+  --court-green: #14534a;
+  --court-green-light: #1d6e62;
+  --accent: #e8b84b;
+  --bg: #f5f7f6;
+  --text: #1f2d2a;
+  --text-soft: #5b6b67;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", Helvetica, sans-serif;
   box-sizing: border-box;
-} 
+}
+
+view, text, button {
+  box-sizing: border-box;
+}

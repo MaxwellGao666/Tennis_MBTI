@@ -1,27 +1,28 @@
-<!--index.wxml-->
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
-        </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
-    </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
-    </view>
+<!--pages/index/index.wxml-->
+<view class="page">
+  <view class="hero">
+    <view class="ball">🎾</view>
+    <view class="title">网球 MBTI</view>
+    <view class="subtitle">测一测你的性格，找到本命网球球星</view>
   </view>
-</scroll-view>
+
+  <view class="card intro">
+    <view class="intro-line">16 道小题，测出你的 MBTI 类型</view>
+    <view class="intro-line">结合网球，看看你的「球风」像谁</view>
+    <view class="intro-line">再匹配一位男女各一的网球明星，找到共鸣</view>
+  </view>
+
+  <view class="card gender-box">
+    <view class="gender-label">想看哪种性别的球星？</view>
+    <view class="gender-switch">
+      <view class="gender-opt {{gender === 'female' ? 'active' : ''}}"
+            data-gender="female" bindtap="selectGender">女生球星</view>
+      <view class="gender-opt {{gender === 'male' ? 'active' : ''}}"
+            data-gender="male" bindtap="selectGender">男生球星</view>
+    </view>
+    <view class="gender-tip">结果页也能随时切换</view>
+  </view>
+
+  <button class="start-btn" bindtap="startTest">开始测试</button>
+  <view class="foot">纯属娱乐 · 球星映射为示意整理</view>
+</view>

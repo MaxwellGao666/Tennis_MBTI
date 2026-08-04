@@ -1,19 +1,7 @@
 // app.js
 App({
-  onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-  },
   globalData: {
-    userInfo: null
+    // 答题人选择的性别：'male' | 'female'，由首页设置、结果页读取
+    gender: 'female'
   }
 })

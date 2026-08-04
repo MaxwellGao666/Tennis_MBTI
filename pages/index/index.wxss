@@ -1,62 +1,91 @@
-/**index.wxss**/
-page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-.scrollarea {
-  flex: 1;
-  overflow-y: hidden;
-}
-
-.userinfo {
+/* pages/index/index.wxss */
+.page {
+  min-height: 100vh;
+  padding: 60rpx 48rpx 80rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #aaa;
-  width: 80%;
 }
 
-.userinfo-avatar {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.hero {
+  margin-top: 40rpx;
+  text-align: center;
+}
+.ball { font-size: 96rpx; line-height: 1; }
+.title {
+  margin-top: 16rpx;
+  font-size: 56rpx;
+  font-weight: 700;
+  color: var(--court-green);
+  letter-spacing: 2rpx;
+}
+.subtitle {
+  margin-top: 12rpx;
+  font-size: 28rpx;
+  color: var(--text-soft);
 }
 
-.usermotto {
-  margin-top: 200px;
+.card {
+  width: 100%;
+  margin-top: 40rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 36rpx 32rpx;
+  box-shadow: 0 8rpx 30rpx rgba(20, 83, 74, 0.06);
 }
 
-.avatar-wrapper {
-  padding: 0;
-  width: 56px !important;
-  border-radius: 8px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+.intro .intro-line {
+  font-size: 28rpx;
+  color: var(--text);
+  line-height: 2;
+}
+.intro .intro-line::before {
+  content: "· ";
+  color: var(--accent);
+  font-weight: 700;
 }
 
-.avatar {
-  display: block;
-  width: 56px;
-  height: 56px;
-}
-
-.nickname-wrapper {
+.gender-box { text-align: center; }
+.gender-label { font-size: 30rpx; font-weight: 600; }
+.gender-switch {
+  margin: 28rpx auto 8rpx;
   display: flex;
   width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-  border-top: .5px solid rgba(0, 0, 0, 0.1);
-  border-bottom: .5px solid rgba(0, 0, 0, 0.1);
-  color: black;
+  background: #eef2f1;
+  border-radius: 999rpx;
+  padding: 8rpx;
 }
-
-.nickname-label {
-  width: 105px;
-}
-
-.nickname-input {
+.gender-opt {
   flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  font-size: 30rpx;
+  color: var(--text-soft);
+  border-radius: 999rpx;
+  transition: all .2s;
+}
+.gender-opt.active {
+  background: var(--court-green);
+  color: #fff;
+  font-weight: 600;
+}
+.gender-tip { font-size: 22rpx; color: #9aa8a4; margin-top: 10rpx; }
+
+.start-btn {
+  margin-top: 56rpx;
+  width: 100%;
+  background: var(--accent);
+  color: #3a2c05;
+  font-size: 34rpx;
+  font-weight: 700;
+  border-radius: 999rpx;
+  padding: 24rpx 0;
+  box-shadow: 0 10rpx 24rpx rgba(232, 184, 75, 0.4);
+}
+.start-btn::after { border: none; }
+
+.foot {
+  margin-top: 32rpx;
+  font-size: 22rpx;
+  color: #9aa8a4;
 }

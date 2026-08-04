@@ -1,0 +1,65 @@
+<!--pages/result/result.wxml-->
+<scroll-view class="page" scroll-y>
+  <!-- 头部：类型 -->
+  <view class="hero">
+    <view class="type-code">{{type}}</view>
+    <view class="type-name">{{info.name}}</view>
+  </view>
+
+  <!-- 区块 A：你的 MBTI -->
+  <view class="block">
+    <view class="block-title"><text class="num">A</text>你的 MBTI 是什么样的</view>
+    <view class="block-body">{{info.traits}}</view>
+  </view>
+
+  <!-- 区块 B：你的球风 -->
+  <view class="block">
+    <view class="block-title"><text class="num">B</text>结合网球 · 你的球风</view>
+    <view class="block-body">{{info.tennisStyle}}</view>
+  </view>
+
+  <!-- 性别切换 -->
+  <view class="gender-switch">
+    <view class="gender-opt {{gender === 'female' ? 'active' : ''}}"
+          data-gender="female" bindtap="switchGender">女生球星</view>
+    <view class="gender-opt {{gender === 'male' ? 'active' : ''}}"
+          data-gender="male" bindtap="switchGender">男生球星</view>
+  </view>
+
+  <!-- 区块 C：本命球星（详细） -->
+  <view class="block star-block">
+    <view class="block-title"><text class="num">C</text>你的本命球星 · {{star.name}}</view>
+    <view class="star-tag">打法</view>
+    <view class="block-body">{{star.playStyle}}</view>
+    <view class="star-tag accent">共鸣点 · 为什么你们是同类</view>
+    <view class="block-body highlight">{{star.resonance}}</view>
+  </view>
+
+  <!-- 操作区 -->
+  <view class="actions">
+    <button class="act-btn primary" bindtap="saveCard">保存卡片到相册</button>
+    <button class="act-btn share" open-type="share">分享给微信好友</button>
+    <button class="act-btn ghost" bindtap="showReward">打赏作者</button>
+    <button class="act-btn ghost" bindtap="retest">再测一次</button>
+  </view>
+  <view class="foot">结果由 16 题自测得出，仅供娱乐参考</view>
+
+  <!-- 离屏卡片画布 -->
+  <canvas type="2d" id="cardCanvas" class="card-canvas"></canvas>
+</scroll-view>
+
+<!-- 打赏弹窗 -->
+<view class="modal-mask" wx:if="{{showReward}}" bindtap="hideReward">
+  <view class="modal" catchtap="noop">
+    <view class="modal-title">打赏作者 💝</view>
+    <view class="qr-box" wx:if="{{rewardQr}}">
+      <image class="qr-img" src="{{rewardQr}}" mode="aspectFit"></image>
+    </view>
+    <view class="qr-placeholder" wx:else>
+      <view class="qr-box-inner">💝</view>
+      <view class="qr-tip">二维码占位 · 替换为你的微信收款码</view>
+    </view>
+    <view class="modal-sub">您的支持纯属自愿，不胜感激 ♥</view>
+    <button class="modal-close" bindtap="hideReward">关闭</button>
+  </view>
+</view>
