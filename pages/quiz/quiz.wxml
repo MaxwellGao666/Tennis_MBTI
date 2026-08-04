@@ -13,19 +13,22 @@
 
     <view class="options">
       <view
-        class="option {{answers[index] === item.value ? 'selected' : ''}}"
+        class="option {{selected === item.value ? 'selected' : ''}}"
         wx:for="{{list[index].options}}"
+        wx:for-index="oi"
         wx:key="value"
         data-value="{{item.value}}"
         bindtap="selectOption">
-        <text class="option-dot">{{index === 0 ? 'A' : 'B'}}</text>
+        <text class="option-dot">{{oi === 0 ? 'A' : 'B'}}</text>
         <text class="option-text">{{item.text}}</text>
+        <text class="option-check" wx:if="{{selected === item.value}}">✓</text>
       </view>
     </view>
   </view>
 
   <view class="nav-row">
     <button class="nav-btn ghost {{index === 0 ? 'disabled' : ''}}" bindtap="prev" disabled="{{index === 0}}">上一题</button>
-    <text class="nav-hint">选择后自动进入下一题</text>
+    <button class="nav-btn primary" bindtap="next">{{index === total - 1 ? '查看结果' : '下一题'}}</button>
   </view>
+  <view class="nav-hint">先选一个选项，再点「{{index === total - 1 ? '查看结果' : '下一题'}}」</view>
 </view>

@@ -4,6 +4,7 @@
   padding: 48rpx 48rpx 60rpx;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .progress-head { margin-bottom: 40rpx; }
@@ -39,14 +40,16 @@
 }
 .q-text {
   margin-top: 28rpx;
-  font-size: 40rpx;
+  font-size: 42rpx;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--text);
+  word-break: break-word;
 }
 
 .options { margin-top: 56rpx; }
 .option {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 32rpx 28rpx;
@@ -59,6 +62,7 @@
 .option.selected {
   background: #eaf5f2;
   border-color: var(--court-green);
+  box-shadow: 0 6rpx 18rpx rgba(20, 83, 74, 0.12);
 }
 .option-dot {
   width: 48rpx;
@@ -75,22 +79,59 @@
   margin-right: 24rpx;
 }
 .option.selected .option-dot { background: var(--court-green); color: #fff; }
-.option-text { font-size: 30rpx; line-height: 1.4; color: var(--text); }
+.option-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 31rpx;
+  line-height: 1.45;
+  color: var(--text);
+  word-break: break-word;
+}
+.option-check {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: var(--court-green);
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .nav-row {
   margin-top: 32rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24rpx;
 }
 .nav-btn {
-  font-size: 28rpx;
-  padding: 16rpx 40rpx;
+  flex: 1;
+  font-size: 30rpx;
+  padding: 22rpx 0;
   border-radius: 999rpx;
+  text-align: center;
+}
+.nav-btn::after { border: none; }
+.nav-btn.ghost {
   background: #fff;
   color: var(--court-green);
   border: 2rpx solid var(--court-green);
 }
-.nav-btn::after { border: none; }
-.nav-btn.disabled { opacity: .4; }
-.nav-hint { font-size: 22rpx; color: #9aa8a4; }
+.nav-btn.ghost.disabled { opacity: .4; }
+.nav-btn.primary {
+  background: var(--accent);
+  color: #3a2c05;
+  font-weight: 700;
+  border: none;
+}
+.nav-hint {
+  margin-top: 18rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #9aa8a4;
+}

@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .hero {
@@ -60,15 +61,18 @@
   text-align: center;
   padding: 18rpx 0;
   font-size: 30rpx;
-  color: var(--text-soft);
   border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all .2s;
 }
-.gender-opt.active {
-  background: var(--court-green);
-  color: #fff;
-  font-weight: 600;
-}
+.gender-opt .gs-sym { font-size: 38rpx; margin-right: 10rpx; font-weight: 700; }
+.gender-opt .gs-cap { font-size: 28rpx; }
+.gender-opt.female { color: #ff5fa2; }
+.gender-opt.female.active { background: #ff5fa2; color: #fff; font-weight: 600; }
+.gender-opt.male { color: #2f74e0; }
+.gender-opt.male.active { background: #2f74e0; color: #fff; font-weight: 600; }
 .gender-tip { font-size: 22rpx; color: #9aa8a4; margin-top: 10rpx; }
 
 .start-btn {

@@ -3,6 +3,7 @@
   min-height: 100vh;
   padding: 0 40rpx 60rpx;
   background: var(--bg);
+  overflow-x: hidden;
 }
 
 .hero {
@@ -10,15 +11,15 @@
   padding: 56rpx 0 36rpx;
 }
 .type-code {
-  font-size: 96rpx;
+  font-size: 100rpx;
   font-weight: 800;
-  letter-spacing: 6rpx;
+  letter-spacing: 8rpx;
   color: var(--court-green);
   line-height: 1.1;
 }
 .type-name {
   margin-top: 8rpx;
-  font-size: 36rpx;
+  font-size: 38rpx;
   font-weight: 600;
   color: var(--accent);
 }
@@ -31,7 +32,7 @@
   box-shadow: 0 8rpx 26rpx rgba(20, 83, 74, 0.06);
 }
 .block-title {
-  font-size: 32rpx;
+  font-size: 33rpx;
   font-weight: 700;
   color: var(--text);
   display: flex;
@@ -50,17 +51,52 @@
   color: #fff;
   font-size: 26rpx;
   font-weight: 700;
+  flex-shrink: 0;
 }
 .block-body {
-  font-size: 29rpx;
-  line-height: 1.75;
-  color: var(--text-soft);
+  font-size: 31rpx;
+  line-height: 1.85;
+  color: #36453f;
+  word-break: break-word;
 }
 
 .star-block { border: 2rpx solid rgba(232, 184, 75, 0.5); }
+.star-head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+.star-photo {
+  width: 132rpx;
+  height: 132rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #eef2f1;
+  margin-right: 26rpx;
+}
+.star-photo.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, var(--court-green), var(--court-green-light));
+}
+.star-meta { flex: 1; min-width: 0; }
+.star-name {
+  font-size: 38rpx;
+  font-weight: 700;
+  color: var(--text);
+}
+.star-sub {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: var(--text-soft);
+}
 .star-tag {
   margin: 22rpx 0 10rpx;
-  font-size: 26rpx;
+  font-size: 27rpx;
   font-weight: 700;
   color: var(--court-green);
 }
@@ -72,6 +108,7 @@
   padding: 22rpx;
 }
 
+/* 性别切换：♀ 粉 / ♂ 蓝 */
 .gender-switch {
   display: flex;
   background: #eef2f1;
@@ -84,23 +121,34 @@
   text-align: center;
   padding: 18rpx 0;
   font-size: 30rpx;
-  color: var(--text-soft);
   border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
 }
-.gender-opt.active {
-  background: var(--court-green);
-  color: #fff;
-  font-weight: 600;
-}
+.gender-opt .gs-sym { font-size: 38rpx; margin-right: 10rpx; font-weight: 700; }
+.gender-opt .gs-cap { font-size: 28rpx; }
+.gender-opt.female { color: #ff5fa2; }
+.gender-opt.female.active { background: #ff5fa2; color: #fff; font-weight: 600; }
+.gender-opt.male { color: #2f74e0; }
+.gender-opt.male.active { background: #2f74e0; color: #fff; font-weight: 600; }
 
-.actions { margin-top: 8rpx; }
+/* 操作区：2x2 网格 */
+.actions {
+  margin-top: 8rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 .act-btn {
-  width: 100%;
+  width: 48.5%;
   margin-bottom: 22rpx;
   padding: 24rpx 0;
   border-radius: 999rpx;
   font-size: 32rpx;
   font-weight: 600;
+  text-align: center;
 }
 .act-btn::after { border: none; }
 .act-btn.primary { background: var(--accent); color: #3a2c05; }
@@ -121,10 +169,10 @@
 /* 离屏卡片画布 */
 .card-canvas {
   position: fixed;
-  left: -9999px;
-  top: 0;
-  width: 300px;
-  height: 400px;
+  left: 0;
+  top: -9999px;
+  width: 360px;
+  height: 480px;
 }
 
 /* 打赏弹窗 */

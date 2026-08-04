@@ -15,10 +15,14 @@
   <view class="card gender-box">
     <view class="gender-label">想看哪种性别的球星？</view>
     <view class="gender-switch">
-      <view class="gender-opt {{gender === 'female' ? 'active' : ''}}"
-            data-gender="female" bindtap="selectGender">女生球星</view>
-      <view class="gender-opt {{gender === 'male' ? 'active' : ''}}"
-            data-gender="male" bindtap="selectGender">男生球星</view>
+      <view class="gender-opt female {{gender === 'female' ? 'active' : ''}}"
+            data-gender="female" bindtap="selectGender">
+        <text class="gs-sym">♀</text><text class="gs-cap">女生球星</text>
+      </view>
+      <view class="gender-opt male {{gender === 'male' ? 'active' : ''}}"
+            data-gender="male" bindtap="selectGender">
+        <text class="gs-sym">♂</text><text class="gs-cap">男生球星</text>
+      </view>
     </view>
     <view class="gender-tip">结果页也能随时切换</view>
   </view>

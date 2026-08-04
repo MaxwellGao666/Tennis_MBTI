@@ -12,6 +12,8 @@ Page({
     gender: 'female', // 'male' | 'female'
     info: null,
     star: null,
+    starInitial: '',
+    starImageOk: true,
     cardImg: '',
     showReward: false,
     rewardQr: REWARD_QR_PATH
@@ -21,11 +23,14 @@ Page({
     const type = (options.type || '').toUpperCase()
     const gender = options.gender || app.globalData.gender || 'female'
     const info = MBTI[type] || MBTI.INFP
+    const star = info.stars[gender]
     this.setData({
       type: info.code || type,
       gender,
       info,
-      star: info.stars[gender]
+      star,
+      starInitial: (star.name || '')[0] || '★',
+      starImageOk: true
     })
     app.globalData.gender = gender
     wx.setStorageSync('gender', gender)
@@ -38,14 +43,25 @@ Page({
   switchGender(e) {
     const gender = e.currentTarget.dataset.gender
     if (gender === this.data.gender) return
-    this.setData({ gender, star: this.data.info.stars[gender] })
+    const star = this.data.info.stars[gender]
+    this.setData({
+      gender,
+      star,
+      starInitial: (star.name || '')[0] || '★',
+      starImageOk: true
+    })
     app.globalData.gender = gender
     wx.setStorageSync('gender', gender)
     // 性别切换后重新生成卡片
     this.generateCard()
   },
 
-  // 生成分享/保存用的卡片图（离屏 canvas 2d）
+  // 球星真人图加载失败 -> 用首字兜底
+  onStarImgError() {
+    this.setData({ starImageOk: false })
+  },
+
+  // 生成分享/保存用的卡片图（离屏 canvas 2d，按 dpr 高清渲染）
   generateCard() {
     const query = wx.createSelectorQuery()
     query.select('#cardCanvas').fields({ node: true, size: true }).exec((res) => {
@@ -53,7 +69,8 @@ Page({
       const canvas = res[0].node
       const ctx = canvas.getContext('2d')
       const dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
-      const W = 600, H = 800
+      // 更大的逻辑画布，保证文字清晰
+      const W = 720, H = 960
       canvas.width = W * dpr
       canvas.height = H * dpr
       ctx.scale(dpr, dpr)
@@ -68,43 +85,54 @@ Page({
       // 网球
       ctx.fillStyle = '#e8b84b'
       ctx.beginPath()
-      ctx.arc(W / 2, 175, 86, 0, Math.PI * 2)
+      ctx.arc(W / 2, 210, 96, 0, Math.PI * 2)
       ctx.fill()
       ctx.strokeStyle = '#0d3a33'
-      ctx.lineWidth = 7
+      ctx.lineWidth = 8
       ctx.beginPath()
-      ctx.arc(W / 2, 175, 86, -0.5, 0.5)
+      ctx.arc(W / 2, 210, 96, -0.5, 0.5)
       ctx.stroke()
       ctx.beginPath()
-      ctx.arc(W / 2, 175, 86, Math.PI - 0.5, Math.PI + 0.5)
+      ctx.arc(W / 2, 210, 96, Math.PI - 0.5, Math.PI + 0.5)
       ctx.stroke()
 
-      // 类型代码
       ctx.textAlign = 'center'
+
+      // 类型代码（加字距更清楚）
+      if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '6px'
       ctx.fillStyle = '#ffffff'
-      ctx.font = 'bold 78px sans-serif'
-      ctx.fillText(this.data.type, W / 2, 360)
+      ctx.font = 'bold 92px sans-serif'
+      ctx.fillText(this.data.type, W / 2, 430)
+      if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '0px'
+
       // 类型名
       ctx.fillStyle = '#e8b84b'
-      ctx.font = '34px sans-serif'
-      ctx.fillText(this.data.info.name, W / 2, 408)
+      ctx.font = '38px sans-serif'
+      ctx.fillText(this.data.info.name, W / 2, 486)
+
       // 球星
       ctx.fillStyle = '#ffffff'
-      ctx.font = '28px sans-serif'
-      ctx.fillText('本命球星 · ' + this.data.star.name, W / 2, 470)
+      ctx.font = '30px sans-serif'
+      ctx.fillText('本命球星 · ' + this.data.star.name, W / 2, 556)
 
       // 标语（自动换行）
-      ctx.fillStyle = 'rgba(255,255,255,0.85)'
-      ctx.font = '26px sans-serif'
-      this.wrapText(ctx, this.data.info.cardTagline, W / 2, 540, W - 130, 38)
+      ctx.fillStyle = 'rgba(255,255,255,0.88)'
+      ctx.font = '30px sans-serif'
+      this.wrapText(ctx, this.data.info.cardTagline, W / 2, 640, W - 150, 46)
 
       // 页脚
-      ctx.fillStyle = 'rgba(255,255,255,0.55)'
-      ctx.font = '22px sans-serif'
-      ctx.fillText('网球 MBTI · 扫码测你的类型', W / 2, H - 50)
+      ctx.fillStyle = 'rgba(255,255,255,0.6)'
+      ctx.font = '24px sans-serif'
+      ctx.fillText('网球 MBTI · 扫码测你的类型', W / 2, H - 56)
 
       wx.canvasToTempFilePath({
         canvas,
+        x: 0,
+        y: 0,
+        width: canvas.width,
+        height: canvas.height,
+        destWidth: canvas.width,
+        destHeight: canvas.height,
         success: (r) => this.setData({ cardImg: r.tempFilePath }),
         fail: () => {}
       })

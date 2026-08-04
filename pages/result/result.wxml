@@ -18,24 +18,44 @@
     <view class="block-body">{{info.tennisStyle}}</view>
   </view>
 
-  <!-- 性别切换 -->
+  <!-- 性别切换（♀ 粉 / ♂ 蓝） -->
   <view class="gender-switch">
-    <view class="gender-opt {{gender === 'female' ? 'active' : ''}}"
-          data-gender="female" bindtap="switchGender">女生球星</view>
-    <view class="gender-opt {{gender === 'male' ? 'active' : ''}}"
-          data-gender="male" bindtap="switchGender">男生球星</view>
+    <view class="gender-opt female {{gender === 'female' ? 'active' : ''}}"
+          data-gender="female" bindtap="switchGender">
+      <text class="gs-sym">♀</text><text class="gs-cap">女生球星</text>
+    </view>
+    <view class="gender-opt male {{gender === 'male' ? 'active' : ''}}"
+          data-gender="male" bindtap="switchGender">
+      <text class="gs-sym">♂</text><text class="gs-cap">男生球星</text>
+    </view>
   </view>
 
   <!-- 区块 C：本命球星（详细） -->
   <view class="block star-block">
     <view class="block-title"><text class="num">C</text>你的本命球星 · {{star.name}}</view>
+
+    <view class="star-head">
+      <image wx:if="{{starImageOk}}" class="star-photo" src="{{star.image}}" mode="aspectFill" binderror="onStarImgError"></image>
+      <view wx:else class="star-photo fallback">{{starInitial}}</view>
+      <view class="star-meta">
+        <view class="star-name">{{star.name}}</view>
+        <view class="star-sub">{{gender === 'female' ? '女子' : '男子'}}网球 · 你的本命球星</view>
+      </view>
+    </view>
+
     <view class="star-tag">打法</view>
     <view class="block-body">{{star.playStyle}}</view>
     <view class="star-tag accent">共鸣点 · 为什么你们是同类</view>
     <view class="block-body highlight">{{star.resonance}}</view>
   </view>
 
-  <!-- 操作区 -->
+  <!-- 区块 D：球风建议 -->
+  <view class="block">
+    <view class="block-title"><text class="num">D</text>给你的一点球风建议</view>
+    <view class="block-body">{{info.advice}}</view>
+  </view>
+
+  <!-- 操作区（2x2 网格） -->
   <view class="actions">
     <button class="act-btn primary" bindtap="saveCard">保存卡片到相册</button>
     <button class="act-btn share" open-type="share">分享给微信好友</button>
