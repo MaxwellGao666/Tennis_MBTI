@@ -142,13 +142,13 @@
 .gender-opt.male { color: #2f74e0; }
 .gender-opt.male.active { background: #2f74e0; color: #fff; font-weight: 600; }
 
-/* 操作区：2x2 网格（1fr 1fr 确保不溢出右侧） */
+/* 操作区：2x2 网格（minmax(0,1fr) 让轨道可被内容压到 0，防止右侧溢出） */
 .actions {
   width: 100%;
   margin-top: 8rpx;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22rpx 20rpx;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22rpx 16rpx;
   box-sizing: border-box;
 }
 .act-btn {
@@ -156,13 +156,14 @@
   margin: 0;
   padding: 22rpx 10rpx;
   border-radius: 999rpx;
-  font-size: 30rpx;
+  font-size: 28rpx;
   font-weight: 600;
   text-align: center;
   box-sizing: border-box;
   min-width: 0;
   line-height: 1.3;
   white-space: normal;
+  word-break: break-all;
 }
 .act-btn::after { border: none; }
 .act-btn.primary { background: var(--accent); color: #3a2c05; }
