@@ -20,22 +20,38 @@
     </view>
   </view>
 
-  <!-- 可保存/分享的卡片区 -->
+  <!-- 可保存/分享的卡片预览（扑克牌竖版：上球星，下文案，右下二维码位） -->
   <view class="share-card" style="border-color:{{themePrimary}}">
-    <view class="sc-head">
-      <view class="sc-type">{{type}}</view>
-      <view class="sc-nick">{{info.nickname}}</view>
-      <view class="sc-rarity" style="background:{{rarityColor}}">{{info.rarity}}</view>
-    </view>
-    <view class="sc-star">
+    <!-- 上半：球星图 -->
+    <view class="sc-photo-wrap">
       <image wx:if="{{starImageOk}}" class="sc-photo" src="{{star.image}}" mode="aspectFill" binderror="onStarImgError"></image>
-      <view wx:else class="sc-photo fallback">{{starInitial}}</view>
-      <view class="sc-star-meta">
-        <view class="sc-star-name">{{star.name}}</view>
-        <view class="sc-star-intro">{{star.intro}}</view>
+      <view wx:else class="sc-photo fallback" style="background:{{themePrimary}}">{{starInitial}}</view>
+      <view class="sc-photo-name">{{star.name}}</view>
+    </view>
+    <!-- 下半：信息 -->
+    <view class="sc-info">
+      <view class="sc-row">
+        <view class="sc-type">{{type}}</view>
+        <view class="sc-rarity" style="background:{{rarityColor}}">{{info.rarity}}</view>
+      </view>
+      <view class="sc-nick">{{info.name}} · {{info.nickname}}</view>
+      <view class="sc-role" style="color:{{themePrimary}};border-color:{{themePrimary}}">{{themeRoleName}}</view>
+      <view class="sc-summary">{{info.cardSummary}}</view>
+      <view class="sc-bottom">
+        <view class="sc-tip">网球 MBTI · 扫码测你的类型</view>
+        <view class="sc-qr" style="border-color:{{themePrimary}}">
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+          <view class="sc-qr-dots" style="background:{{themePrimary}}"></view>
+        </view>
       </view>
     </view>
-    <view class="sc-foot">网球 MBTI · 你的本命球星</view>
   </view>
 
   <!-- 区块 A：你的 MBTI -->

@@ -75,88 +75,121 @@
 .gender-opt.male { color: #2f74e0; }
 .gender-opt.male.active { background: #2f74e0; color: #fff; font-weight: 600; }
 
-/* ===== 可保存/分享卡片区 ===== */
+/* ===== 可保存/分享卡片区（扑克牌竖版） ===== */
 .share-card {
   width: 100%;
+  max-width: 560rpx;
+  margin: 0 auto 30rpx;
   background: #fff;
-  border: 3rpx solid var(--theme);
-  border-radius: 28rpx;
-  padding: 34rpx 30rpx 26rpx;
-  margin-bottom: 30rpx;
-  box-shadow: 0 12rpx 36rpx rgba(20, 83, 74, 0.10);
+  border: 4rpx solid var(--theme);
+  border-radius: 32rpx;
+  overflow: hidden;
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
 }
-.sc-head {
+.sc-photo-wrap {
+  position: relative;
+  width: 100%;
+  height: 360rpx;
+  background: #eef2f1;
+  overflow: hidden;
+}
+.sc-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.sc-photo.fallback {
   display: flex;
   align-items: center;
-  margin-bottom: 26rpx;
+  justify-content: center;
+  font-size: 140rpx;
+  font-weight: 800;
+  color: #fff;
+}
+.sc-photo-name {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 50rpx 24rpx 18rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+}
+.sc-info {
+  padding: 26rpx 28rpx 28rpx;
+  box-sizing: border-box;
+}
+.sc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
 }
 .sc-type {
-  font-size: 56rpx;
+  font-size: 64rpx;
   font-weight: 800;
   letter-spacing: 4rpx;
   color: var(--theme);
-}
-.sc-nick {
-  flex: 1;
-  margin-left: 20rpx;
-  font-size: 34rpx;
-  font-weight: 700;
-  color: var(--text);
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1;
 }
 .sc-rarity {
-  flex-shrink: 0;
   padding: 6rpx 20rpx;
   border-radius: 999rpx;
   color: #fff;
   font-size: 24rpx;
   font-weight: 700;
 }
-.sc-star {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-.sc-photo {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 24rpx;
-  flex-shrink: 0;
-  background: #eef2f1;
-  margin-right: 24rpx;
-}
-.sc-photo.fallback {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 52rpx;
-  font-weight: 800;
-  color: #fff;
-  background: linear-gradient(135deg, var(--theme), var(--theme));
-}
-.sc-star-meta { flex: 1; min-width: 0; }
-.sc-star-name {
-  font-size: 34rpx;
+.sc-nick {
+  font-size: 30rpx;
   font-weight: 700;
   color: var(--text);
-  word-break: break-word;
+  margin-bottom: 12rpx;
 }
-.sc-star-intro {
-  margin-top: 8rpx;
-  font-size: 26rpx;
-  line-height: 1.6;
-  color: var(--text-soft);
-  word-break: break-word;
-}
-.sc-foot {
-  margin-top: 22rpx;
-  text-align: center;
+.sc-role {
+  display: inline-block;
+  padding: 4rpx 18rpx;
+  border: 2rpx solid var(--theme);
+  border-radius: 999rpx;
   font-size: 22rpx;
-  color: #9aa8a4;
+  font-weight: 600;
+  margin-bottom: 18rpx;
+}
+.sc-summary {
+  font-size: 27rpx;
+  line-height: 1.75;
+  color: #4a5568;
+  word-break: break-word;
+  margin-bottom: 22rpx;
+}
+.sc-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sc-tip {
+  font-size: 22rpx;
+  color: #a0aec0;
+}
+.sc-qr {
+  width: 88rpx;
+  height: 88rpx;
+  border: 3rpx solid var(--theme);
+  border-radius: 12rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 6rpx;
+  padding: 6rpx;
+  box-sizing: border-box;
+}
+.sc-qr-dots {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 2rpx;
 }
 
 /* ===== 详细报告区块 ===== */

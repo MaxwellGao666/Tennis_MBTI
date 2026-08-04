@@ -17,7 +17,7 @@ const ROLE_THEME = {
 
 // 稀有度 -> 颜色
 const RARITY_COLORS = {
-  '普通': '#94a3a0',
+  '普通': '#94a3b0',
   '稀有': '#1d9e8f',
   '史诗': '#8b5cf6',
   '传说': '#d99a1f'
@@ -48,7 +48,7 @@ Page({
     themePrimary: '#1d6e62',
     themeBg: '#e7f3f0',
     themeRoleName: '分析家',
-    rarityColor: '#94a3a0'
+    rarityColor: '#94a3b0'
   },
 
   onLoad(options) {
@@ -105,16 +105,41 @@ Page({
     this.setData({ starImageOk: false })
   },
 
-  // 生成分享/保存用的卡片图（离屏 canvas 2d，按 dpr 高清渲染）
-  generateCard() {
+  // 将项目内图片复制到本地临时路径，供 canvas 2d 的 Image 加载
+  loadLocalImage(canvas, srcPath) {
+    return new Promise((resolve) => {
+      if (!srcPath) return resolve(null)
+      const fs = wx.getFileSystemManager()
+      const tmp = `${wx.env.USER_DATA_PATH}/star-card-cache-${Date.now()}.jpg`
+      fs.copyFile({
+        srcPath,
+        destPath: tmp,
+        success: () => {
+          const img = canvas.createImage()
+          img.onload = () => resolve(img)
+          img.onerror = () => resolve(null)
+          img.src = tmp
+        },
+        fail: (err) => {
+          console.log('copy image fail', err)
+          resolve(null)
+        }
+      })
+    })
+  },
+
+  // 生成分享/保存用的卡片图（扑克牌比例竖版：上球星，下文案，右下二维码位）
+  async generateCard() {
     const query = wx.createSelectorQuery()
-    query.select('#cardCanvas').fields({ node: true, size: true }).exec((res) => {
+    query.select('#cardCanvas').fields({ node: true, size: true }).exec(async (res) => {
       if (!res || !res[0] || !res[0].node) return
       const canvas = res[0].node
       const ctx = canvas.getContext('2d')
       const dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
-      // 更大的逻辑画布，保证文字清晰
-      const W = 720, H = 960
+
+      // 扑克牌比例 2:3，高清输出
+      const W = 720, H = 1080
+      const HALF = Math.floor(H / 2)
       canvas.width = W * dpr
       canvas.height = H * dpr
       ctx.scale(dpr, dpr)
@@ -122,68 +147,128 @@ Page({
       const theme = this.theme || ROLE_THEME.analyst
       const rColor = this.rarityColor || RARITY_COLORS['普通']
 
-      // 背景：主题色渐变
-      const grad = ctx.createLinearGradient(0, 0, 0, H)
-      grad.addColorStop(0, theme.primary)
-      grad.addColorStop(1, this.darken(theme.primary, 0.18))
-      ctx.fillStyle = grad
+      // 全局底色：白色底 + 主题边框感（由导出后透明无关，先铺白）
+      ctx.fillStyle = '#ffffff'
       ctx.fillRect(0, 0, W, H)
 
-      // 网球装饰
-      ctx.fillStyle = '#e8b84b'
-      ctx.beginPath()
-      ctx.arc(W / 2, 200, 84, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.strokeStyle = this.darken(theme.primary, 0.3)
-      ctx.lineWidth = 7
-      ctx.beginPath()
-      ctx.arc(W / 2, 200, 84, -0.5, 0.5)
-      ctx.stroke()
-      ctx.beginPath()
-      ctx.arc(W / 2, 200, 84, Math.PI - 0.5, Math.PI + 0.5)
-      ctx.stroke()
+      // === 上半：球星图区 ===
+      const img = await this.loadLocalImage(canvas, this.data.star.image)
+      ctx.save()
+      this.roundRect(ctx, 0, 0, W, HALF, 0)
+      ctx.clip()
+      if (img && img.width) {
+        // 居中裁剪填充
+        const ir = img.width / img.height
+        const tr = W / HALF
+        let dw, dh, dx, dy
+        if (ir > tr) {
+          dh = HALF; dw = dh * ir; dx = (W - dw) / 2; dy = 0
+        } else {
+          dw = W; dh = dw / ir; dx = 0; dy = (HALF - dh) / 2
+        }
+        ctx.drawImage(img, dx, dy, dw, dh)
+      } else {
+        // 兜底：主题渐变 + 首字
+        const grad = ctx.createLinearGradient(0, 0, W, HALF)
+        grad.addColorStop(0, theme.primary)
+        grad.addColorStop(1, this.darken(theme.primary, 0.22))
+        ctx.fillStyle = grad
+        ctx.fillRect(0, 0, W, HALF)
+        ctx.textAlign = 'center'
+        ctx.fillStyle = 'rgba(255,255,255,0.35)'
+        ctx.font = 'bold 240px sans-serif'
+        ctx.fillText(this.data.starInitial, W / 2, HALF / 2 + 80)
+      }
+      ctx.restore()
 
-      ctx.textAlign = 'center'
-
-      // 类型代码（加字距更清楚）
-      if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '6px'
+      // 球星名浮层（底部渐变遮罩+名字）
+      const nameGrad = ctx.createLinearGradient(0, HALF - 110, 0, HALF)
+      nameGrad.addColorStop(0, 'rgba(0,0,0,0)')
+      nameGrad.addColorStop(1, 'rgba(0,0,0,0.55)')
+      ctx.fillStyle = nameGrad
+      ctx.fillRect(0, HALF - 110, W, 110)
+      ctx.textAlign = 'left'
       ctx.fillStyle = '#ffffff'
-      ctx.font = 'bold 92px sans-serif'
-      ctx.fillText(this.data.type, W / 2, 410)
+      ctx.font = 'bold 38px sans-serif'
+      ctx.fillText(this.data.star.name, 34, HALF - 30)
+
+      // === 下半：信息区 ===
+      // 头部标题块
+      ctx.textAlign = 'left'
+
+      // MBTI 类型大字
+      if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '4px'
+      ctx.fillStyle = theme.primary
+      ctx.font = 'bold 86px sans-serif'
+      ctx.fillText(this.data.type, 40, HALF + 110)
       if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '0px'
 
-      // 类型名 + 外号
-      ctx.fillStyle = '#e8b84b'
-      ctx.font = 'bold 40px sans-serif'
-      ctx.fillText(this.data.info.name + ' · ' + this.data.info.nickname, W / 2, 470)
+      // 类型名 · 外号
+      ctx.fillStyle = '#2c3e50'
+      ctx.font = 'bold 34px sans-serif'
+      ctx.fillText(`${this.data.info.name} · ${this.data.info.nickname}`, 40, HALF + 168)
 
       // 稀有度 pill
+      const pillW = 110, pillH = 46, pillX = 40, pillY = HALF + 196
       ctx.fillStyle = rColor
-      this.roundRect(ctx, W / 2 - 90, 500, 180, 52, 26)
+      this.roundRect(ctx, pillX, pillY, pillW, pillH, 23)
       ctx.fill()
       ctx.fillStyle = '#ffffff'
-      ctx.font = 'bold 30px sans-serif'
-      ctx.fillText(this.data.info.rarity, W / 2, 536)
+      ctx.font = 'bold 26px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.fillText(this.data.info.rarity, pillX + pillW / 2, pillY + 32)
+      ctx.textAlign = 'left'
 
-      // 球星
-      ctx.fillStyle = '#ffffff'
-      ctx.font = '34px sans-serif'
-      ctx.fillText('本命球星 · ' + this.data.star.name, W / 2, 624)
+      // 角色标签
+      ctx.strokeStyle = theme.primary
+      ctx.lineWidth = 2
+      ctx.fillStyle = 'rgba(255,255,255,0)'
+      this.roundRect(ctx, 168, HALF + 196, 130, 46, 23)
+      ctx.stroke()
+      ctx.fillStyle = theme.primary
+      ctx.font = 'bold 24px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.fillText(theme.name, 168 + 65, HALF + 227)
+      ctx.textAlign = 'left'
 
-      // 球星简短介绍（自动换行）
-      ctx.fillStyle = 'rgba(255,255,255,0.90)'
+      // 总结文案（自动换行）
+      ctx.fillStyle = '#4a5568'
       ctx.font = '28px sans-serif'
-      this.wrapText(ctx, this.data.star.intro || '', W / 2, 690, W - 150, 44)
+      const summary = this.data.info.cardSummary || this.data.info.cardTagline
+      this.wrapText(ctx, summary, 40, HALF + 288, W - 80, 50)
 
-      // 标语
-      ctx.fillStyle = 'rgba(255,255,255,0.72)'
-      ctx.font = '26px sans-serif'
-      this.wrapText(ctx, this.data.info.cardTagline, W / 2, 812, W - 150, 40)
+      // === 右下角二维码占位 ===
+      const qrSize = 150
+      const qrX = W - qrSize - 40
+      const qrY = H - qrSize - 40
+      ctx.fillStyle = '#ffffff'
+      this.roundRect(ctx, qrX - 8, qrY - 8, qrSize + 16, qrSize + 16, 16)
+      ctx.fill()
+      ctx.strokeStyle = '#e2e8f0'
+      ctx.lineWidth = 2
+      this.roundRect(ctx, qrX - 8, qrY - 8, qrSize + 16, qrSize + 16, 16)
+      ctx.stroke()
+      // 二维码装饰点阵
+      ctx.fillStyle = theme.primary
+      const cell = 14, gap = 4
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          if ((r * 7 + c) % 3 === 0 || r === 0 || r === 6 || c === 0 || c === 6) {
+            ctx.fillRect(qrX + c * (cell + gap), qrY + r * (cell + gap), cell, cell)
+          }
+        }
+      }
+      // 三个定位角
+      ctx.strokeStyle = theme.primary
+      ctx.lineWidth = 4
+      ;[[qrX, qrY], [qrX + qrSize - 38, qrY], [qrX, qrY + qrSize - 38]].forEach(([x, y]) => {
+        ctx.strokeRect(x, y, 34, 34)
+      })
 
-      // 页脚
-      ctx.fillStyle = 'rgba(255,255,255,0.6)'
+      // 左下角提示
+      ctx.fillStyle = '#a0aec0'
       ctx.font = '24px sans-serif'
-      ctx.fillText('网球 MBTI · 扫码测你的类型', W / 2, H - 56)
+      ctx.fillText('网球 MBTI · 扫码测你的类型', 40, H - 40)
 
       wx.canvasToTempFilePath({
         canvas,
@@ -193,6 +278,8 @@ Page({
         height: canvas.height,
         destWidth: canvas.width,
         destHeight: canvas.height,
+        fileType: 'jpg',
+        quality: 0.92,
         success: (r) => this.setData({ cardImg: r.tempFilePath }),
         fail: () => {}
       })
