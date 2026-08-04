@@ -31,8 +31,9 @@
   padding: 40rpx 34rpx;
   box-shadow: 0 12rpx 40rpx rgba(20, 83, 74, 0.08);
   box-sizing: border-box;
-  /* 不撑满剩余高度，整体更紧凑，方便后期加背景图 */
+  /* 不撑满剩余高度，整体更紧凑；上下居中让背景图在卡片上下露出 */
   flex: 0 0 auto;
+  margin: auto 0;
 }
 .q-tag {
   display: inline-block;

@@ -142,18 +142,18 @@
 .gender-opt.male { color: #2f74e0; }
 .gender-opt.male.active { background: #2f74e0; color: #fff; font-weight: 600; }
 
-/* 操作区：2x2 网格 */
+/* 操作区：2x2 网格（1fr 1fr 确保不溢出右侧） */
 .actions {
   width: 100%;
   margin-top: 8rpx;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22rpx 20rpx;
   box-sizing: border-box;
 }
 .act-btn {
-  width: calc(50% - 12rpx);
-  margin: 0 0 22rpx 0;
+  width: 100%;
+  margin: 0;
   padding: 22rpx 10rpx;
   border-radius: 999rpx;
   font-size: 30rpx;
