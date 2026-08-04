@@ -13,7 +13,8 @@
       { "type": "file", "value": "images/bg/bg-result-SP-purple.png" },
       { "type": "file", "value": "images/bg/bg-quiz-court.png" },
       { "type": "file", "value": "images/stars/compare-federer.jpg" },
-      { "type": "file", "value": "images/stars/star-ai-sample.png" }
+      { "type": "file", "value": "images/stars/star-ai-sample.png" },
+      { "type": "folder", "value": "images/stars/_raw" }
     ],
     "include": []
   },

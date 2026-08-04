@@ -1,0 +1,676 @@
+{
+  "ok": [
+    {
+      "key": "INTJ-male",
+      "face_box": [
+        256,
+        349,
+        730,
+        730
+      ],
+      "area_ratio": 0.2052,
+      "crop_box": [
+        -398,
+        0,
+        1280,
+        1678
+      ],
+      "src_size": [
+        1280,
+        2029
+      ]
+    },
+    {
+      "key": "INTJ-female",
+      "face_box": [
+        320,
+        251,
+        686,
+        686
+      ],
+      "area_ratio": 0.1916,
+      "crop_box": [
+        -297,
+        0,
+        1280,
+        1577
+      ],
+      "src_size": [
+        1280,
+        1919
+      ]
+    },
+    {
+      "key": "INTP-male",
+      "face_box": [
+        463,
+        235,
+        494,
+        494
+      ],
+      "area_ratio": 0.1116,
+      "crop_box": [
+        142,
+        0,
+        1278,
+        1136
+      ],
+      "src_size": [
+        1280,
+        1709
+      ]
+    },
+    {
+      "key": "ENTJ-male",
+      "face_box": [
+        289,
+        486,
+        792,
+        792
+      ],
+      "area_ratio": 0.2766,
+      "crop_box": [
+        -541,
+        -49,
+        1280,
+        1772
+      ],
+      "src_size": [
+        1280,
+        1772
+      ]
+    },
+    {
+      "key": "ENTJ-female",
+      "face_box": [
+        191,
+        62,
+        171,
+        171
+      ],
+      "area_ratio": 0.101,
+      "crop_box": [
+        26,
+        0,
+        419,
+        393
+      ],
+      "src_size": [
+        419,
+        691
+      ]
+    },
+    {
+      "key": "ENTP-male",
+      "face_box": [
+        151,
+        231,
+        480,
+        480
+      ],
+      "area_ratio": 0.1656,
+      "crop_box": [
+        -104,
+        0,
+        1000,
+        1104
+      ],
+      "src_size": [
+        1000,
+        1391
+      ]
+    },
+    {
+      "key": "ENTP-female",
+      "face_box": [
+        443,
+        252,
+        404,
+        404
+      ],
+      "area_ratio": 0.0748,
+      "crop_box": [
+        181,
+        0,
+        1110,
+        929
+      ],
+      "src_size": [
+        1280,
+        1705
+      ]
+    },
+    {
+      "key": "INFJ-male",
+      "face_box": [
+        258,
+        187,
+        168,
+        168
+      ],
+      "area_ratio": 0.0486,
+      "crop_box": [
+        149,
+        58,
+        535,
+        444
+      ],
+      "src_size": [
+        622,
+        934
+      ]
+    },
+    {
+      "key": "INFJ-female",
+      "face_box": [
+        353,
+        334,
+        544,
+        544
+      ],
+      "area_ratio": 0.1355,
+      "crop_box": [
+        0,
+        0,
+        1251,
+        1251
+      ],
+      "src_size": [
+        1280,
+        1706
+      ]
+    },
+    {
+      "key": "INFP-male",
+      "face_box": [
+        402,
+        188,
+        402,
+        402
+      ],
+      "area_ratio": 0.0657,
+      "crop_box": [
+        141,
+        0,
+        1065,
+        924
+      ],
+      "src_size": [
+        1280,
+        1923
+      ]
+    },
+    {
+      "key": "ENFJ-female",
+      "face_box": [
+        195,
+        224,
+        830,
+        830
+      ],
+      "area_ratio": 0.382,
+      "crop_box": [
+        -628,
+        -499,
+        1280,
+        1409
+      ],
+      "src_size": [
+        1280,
+        1409
+      ]
+    },
+    {
+      "key": "ENFP-male",
+      "face_box": [
+        458,
+        74,
+        430,
+        430
+      ],
+      "area_ratio": 0.0751,
+      "crop_box": [
+        179,
+        0,
+        1167,
+        988
+      ],
+      "src_size": [
+        1280,
+        1923
+      ]
+    },
+    {
+      "key": "ENFP-female",
+      "face_box": [
+        92,
+        169,
+        842,
+        842
+      ],
+      "area_ratio": 0.4713,
+      "crop_box": [
+        -907,
+        -474,
+        1029,
+        1462
+      ],
+      "src_size": [
+        1029,
+        1462
+      ]
+    },
+    {
+      "key": "ISTJ-male",
+      "face_box": [
+        167,
+        216,
+        325,
+        325
+      ],
+      "area_ratio": 0.1568,
+      "crop_box": [
+        -11,
+        0,
+        736,
+        747
+      ],
+      "src_size": [
+        736,
+        915
+      ]
+    },
+    {
+      "key": "ISTJ-female",
+      "face_box": [
+        126,
+        48,
+        130,
+        130
+      ],
+      "area_ratio": 0.0538,
+      "crop_box": [
+        42,
+        0,
+        341,
+        299
+      ],
+      "src_size": [
+        499,
+        630
+      ]
+    },
+    {
+      "key": "ISFJ-male",
+      "face_box": [
+        227,
+        184,
+        472,
+        472
+      ],
+      "area_ratio": 0.1634,
+      "crop_box": [
+        -79,
+        0,
+        1006,
+        1085
+      ],
+      "src_size": [
+        1006,
+        1355
+      ]
+    },
+    {
+      "key": "ISFJ-female",
+      "face_box": [
+        476,
+        256,
+        411,
+        411
+      ],
+      "area_ratio": 0.0774,
+      "crop_box": [
+        209,
+        0,
+        1154,
+        945
+      ],
+      "src_size": [
+        1280,
+        1706
+      ]
+    },
+    {
+      "key": "ESTJ-male",
+      "face_box": [
+        237,
+        88,
+        127,
+        127
+      ],
+      "area_ratio": 0.0551,
+      "crop_box": [
+        154,
+        0,
+        446,
+        292
+      ],
+      "src_size": [
+        463,
+        632
+      ]
+    },
+    {
+      "key": "ESTJ-female",
+      "face_box": [
+        95,
+        96,
+        414,
+        414
+      ],
+      "area_ratio": 0.311,
+      "crop_box": [
+        -337,
+        -56,
+        615,
+        896
+      ],
+      "src_size": [
+        615,
+        896
+      ]
+    },
+    {
+      "key": "ESFJ-male",
+      "face_box": [
+        287,
+        252,
+        421,
+        421
+      ],
+      "area_ratio": 0.1835,
+      "crop_box": [
+        -120,
+        0,
+        848,
+        968
+      ],
+      "src_size": [
+        848,
+        1139
+      ]
+    },
+    {
+      "key": "ESFJ-female",
+      "face_box": [
+        474,
+        957,
+        321,
+        321
+      ],
+      "area_ratio": 0.0419,
+      "crop_box": [
+        265,
+        711,
+        1003,
+        1449
+      ],
+      "src_size": [
+        1280,
+        1920
+      ]
+    },
+    {
+      "key": "ISTP-male",
+      "face_box": [
+        436,
+        168,
+        365,
+        365
+      ],
+      "area_ratio": 0.0542,
+      "crop_box": [
+        199,
+        0,
+        1038,
+        839
+      ],
+      "src_size": [
+        1280,
+        1920
+      ]
+    },
+    {
+      "key": "ISFP-male",
+      "face_box": [
+        102,
+        195,
+        563,
+        563
+      ],
+      "area_ratio": 0.2652,
+      "crop_box": [
+        -347,
+        -32,
+        947,
+        1262
+      ],
+      "src_size": [
+        947,
+        1262
+      ]
+    },
+    {
+      "key": "ISFP-female",
+      "face_box": [
+        77,
+        228,
+        540,
+        540
+      ],
+      "area_ratio": 0.3523,
+      "crop_box": [
+        -499,
+        -128,
+        743,
+        1114
+      ],
+      "src_size": [
+        743,
+        1114
+      ]
+    },
+    {
+      "key": "ESTP-male",
+      "face_box": [
+        326,
+        244,
+        541,
+        541
+      ],
+      "area_ratio": 0.2269,
+      "crop_box": [
+        -207,
+        0,
+        1037,
+        1244
+      ],
+      "src_size": [
+        1037,
+        1244
+      ]
+    },
+    {
+      "key": "ESTP-female",
+      "face_box": [
+        150,
+        218,
+        529,
+        529
+      ],
+      "area_ratio": 0.2744,
+      "crop_box": [
+        -294,
+        -110,
+        922,
+        1106
+      ],
+      "src_size": [
+        922,
+        1106
+      ]
+    },
+    {
+      "key": "ESFP-male",
+      "face_box": [
+        124,
+        90,
+        376,
+        376
+      ],
+      "area_ratio": 0.2332,
+      "crop_box": [
+        -221,
+        0,
+        643,
+        864
+      ],
+      "src_size": [
+        643,
+        943
+      ]
+    },
+    {
+      "key": "ESFP-female",
+      "face_box": [
+        426,
+        237,
+        470,
+        470
+      ],
+      "area_ratio": 0.0963,
+      "crop_box": [
+        121,
+        0,
+        1202,
+        1081
+      ],
+      "src_size": [
+        1280,
+        1792
+      ]
+    },
+    {
+      "key": "INTP-female",
+      "mode": "fallback",
+      "crop_box": [
+        49,
+        0,
+        1035,
+        986
+      ],
+      "src_size": [
+        1085,
+        1370
+      ]
+    },
+    {
+      "key": "ENFJ-male",
+      "mode": "fallback",
+      "crop_box": [
+        19,
+        0,
+        393,
+        374
+      ],
+      "src_size": [
+        412,
+        520
+      ]
+    },
+    {
+      "key": "INFP-female",
+      "mode": "fallback",
+      "crop_box": [
+        0,
+        0,
+        1280,
+        1280
+      ],
+      "src_size": [
+        1280,
+        1874
+      ]
+    },
+    {
+      "key": "ISTP-female",
+      "mode": "fallback",
+      "crop_box": [
+        0,
+        0,
+        1280,
+        1280
+      ],
+      "src_size": [
+        1280,
+        1918
+      ]
+    }
+  ],
+  "review": [
+    {
+      "key": "INTP-female",
+      "reason": "no_face_fallback_fixed",
+      "W": 1085,
+      "H": 1370
+    },
+    {
+      "key": "INFP-female",
+      "face_box": [
+        278,
+        1478,
+        69,
+        69
+      ],
+      "area_ratio": 0.002,
+      "crop_box": [
+        233,
+        1425,
+        391,
+        1583
+      ],
+      "src_size": [
+        1280,
+        1874
+      ],
+      "reason": "tiny_face_fallback_fixed"
+    },
+    {
+      "key": "ENFJ-male",
+      "reason": "no_face_fallback_fixed",
+      "W": 412,
+      "H": 520
+    },
+    {
+      "key": "ISTP-female",
+      "face_box": [
+        959,
+        558,
+        177,
+        177
+      ],
+      "area_ratio": 0.0128,
+      "crop_box": [
+        844,
+        422,
+        1251,
+        829
+      ],
+      "src_size": [
+        1280,
+        1918
+      ],
+      "reason": "tiny_face_fallback_fixed"
+    }
+  ]
+}
