@@ -1,5 +1,5 @@
 <!--pages/result/result.wxml-->
-<scroll-view class="page" scroll-y>
+<view class="page">
   <!-- 头部：类型 -->
   <view class="hero">
     <view class="type-code">{{type}}</view>
@@ -66,7 +66,7 @@
 
   <!-- 离屏卡片画布 -->
   <canvas type="2d" id="cardCanvas" class="card-canvas"></canvas>
-</scroll-view>
+</view>
 
 <!-- 打赏弹窗 -->
 <view class="modal-mask" wx:if="{{showReward}}" bindtap="hideReward">
