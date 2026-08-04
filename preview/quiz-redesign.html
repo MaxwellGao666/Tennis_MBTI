@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>答题页重新设计 · 预览</title>
+<style>
+  :root{
+    --court-green:#14534a;
+    --court-green-light:#1d6e62;
+    --accent:#e8b84b;
+    --text:#1f2d2a;
+    --text-soft:#5b6b67;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:#eceff1;
+    min-height:100vh;
+    display:flex;
+    gap:32px;
+    align-items:flex-start;
+    justify-content:center;
+    padding:32px 16px;
+    flex-wrap:wrap;
+  }
+
+  /* ===== 手机外框 ===== */
+  .phone{
+    width:375px;
+    height:812px;
+    border-radius:44px;
+    background:#000;
+    padding:12px;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);
+    position:relative;
+  }
+  .screen{
+    width:100%;
+    height:100%;
+    border-radius:34px;
+    overflow:hidden;
+    position:relative;
+    background-image:url('../images/bg/bg-quiz-court.jpg');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* 顶部状态栏 */
+  .statusbar{
+    height:44px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 24px;
+    color:#fff;
+    font-size:14px;font-weight:600;
+    text-shadow:0 1px 3px rgba(0,0,0,.35);
+  }
+  .statusbar .icons{display:flex;gap:6px;align-items:center;font-size:12px;}
+
+  /* 导航条 */
+  .navbar{
+    height:48px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+    color:#fff;
+    font-size:17px;font-weight:600;
+    text-shadow:0 1px 4px rgba(0,0,0,.4);
+  }
+  .navbar .back{position:absolute;left:18px;font-size:22px;line-height:1;}
+  .navbar .menu{position:absolute;right:18px;font-size:20px;line-height:1;}
+
+  /* 进度 —— 加半透明绿底方块，避免白字压白线 */
+  .progress-head{
+    margin:6px 18px 0;
+    padding:10px 16px;
+    border-radius:16px;
+    background:rgba(20,83,74,.55);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.25);
+    color:#fff;
+  }
+  .progress-text{font-size:13px;font-weight:600;}
+  .progress-track{
+    margin-top:8px;height:8px;
+    background:rgba(255,255,255,.4);
+    border-radius:999px;overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--court-green),var(--court-green-light));
+    border-radius:999px;
+  }
+
+  /* 页面主体 */
+  .page{
+    flex:1;
+    padding:26px 22px 30px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* 题目卡片 —— 半透明 */
+  .q-card{
+    width:100%;
+    border-radius:20px;
+    padding:26px 22px;
+    /* 半透明 + 毛玻璃 */
+    background:rgba(255,255,255,.62);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.55);
+    box-shadow:0 10px 30px rgba(20,83,74,.18);
+    margin:auto 0;
+  }
+  .q-tag{
+    display:inline-block;
+    font-size:13px;color:var(--court-green);
+    background:rgba(227,240,237,.85);
+    padding:4px 14px;border-radius:999px;
+  }
+  .q-text{
+    margin-top:14px;font-size:21px;font-weight:600;line-height:1.5;color:var(--text);
+  }
+  .options{margin-top:22px;}
+  .option{
+    position:relative;
+    display:flex;align-items:center;
+    padding:16px 15px;margin-bottom:13px;
+    background:rgba(246,249,248,.78);
+    border:1.5px solid transparent;
+    border-radius:14px;
+    transition:all .15s;
+  }
+  .option.selected{
+    background:rgba(234,245,242,.92);
+    border-color:var(--court-green);
+    box-shadow:0 4px 14px rgba(20,83,74,.15);
+  }
+  .option-dot{
+    width:30px;height:30px;flex-shrink:0;border-radius:50%;
+    background:#fff;color:var(--court-green);
+    font-weight:700;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+    margin-right:14px;
+  }
+  .option.selected .option-dot{background:var(--court-green);color:#fff;}
+  .option-text{flex:1;min-width:0;font-size:16px;line-height:1.45;color:var(--text);}
+  .option-check{
+    flex-shrink:0;margin-left:10px;width:24px;height:24px;border-radius:50%;
+    background:var(--court-green);color:#fff;font-size:13px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* 底部按钮 */
+  .nav-row{margin-top:24px;display:flex;gap:14px;}
+  .nav-btn{
+    flex:1;text-align:center;font-size:16px;
+    padding:13px 0;border-radius:999px;
+  }
+  .nav-btn.ghost{
+    background:#fff;color:var(--court-green);
+    border:1.5px solid var(--court-green);
+  }
+  .nav-btn.primary{
+    background:var(--accent);color:#3a2c05;font-weight:700;border:none;
+  }
+  .nav-hint{margin-top:12px;text-align:center;font-size:12px;color:#4a5a56;text-shadow:0 1px 3px rgba(255,255,255,.6);}
+
+  /* ===== 控制面板 ===== */
+  .panel{
+    width:300px;
+    background:#fff;border-radius:18px;
+    padding:22px;box-shadow:0 12px 30px rgba(0,0,0,.12);
+    align-self:flex-start;
+  }
+  .panel h3{font-size:16px;color:var(--text);margin-bottom:6px;}
+  .panel p{font-size:13px;color:var(--text-soft);line-height:1.6;margin-bottom:16px;}
+  .row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;font-size:14px;color:var(--text);}
+  .seg{display:flex;border:1.5px solid var(--court-green);border-radius:999px;overflow:hidden;}
+  .seg button{
+    border:none;background:transparent;padding:7px 16px;font-size:13px;cursor:pointer;color:var(--court-green);
+  }
+  .seg button.active{background:var(--court-green);color:#fff;}
+  input[type=range]{width:150px;accent-color:var(--court-green);}
+  .note{font-size:12px;color:#9aa8a4;margin-top:4px;}
+</style>
+</head>
+<body>
+
+  <div class="phone">
+    <div class="screen" id="screen">
+      <div class="statusbar">
+        <span>9:41</span>
+        <span class="icons">●●● &nbsp; 5G &nbsp; 🔋</span>
+      </div>
+      <div class="navbar">
+        <span class="back">‹</span>
+        测试中
+        <span class="menu">⋯</span>
+      </div>
+
+      <div class="progress-head">
+        <div class="progress-text">第 3 / 16 题</div>
+        <div class="progress-track"><div class="progress-fill" style="width:19%"></div></div>
+      </div>
+
+      <div class="page">
+        <div class="q-card" id="card">
+          <span class="q-tag">EI 维度</span>
+          <div class="q-text">面对陌生的对手，你通常会？</div>
+          <div class="options">
+            <div class="option selected">
+              <span class="option-dot">A</span>
+              <span class="option-text">主动找话题，享受破冰的过程</span>
+              <span class="option-check">✓</span>
+            </div>
+            <div class="option">
+              <span class="option-dot">B</span>
+              <span class="option-text">先观察，等对方先开口</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-row">
+          <div class="nav-btn ghost">上一题</div>
+          <div class="nav-btn primary">下一题</div>
+        </div>
+        <div class="nav-hint">先选一个选项，再点「下一题」</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>答题页 · 重新设计预览</h3>
+    <p>背景已换成卡通网球场景图；中间题目卡片改为半透明毛玻璃。可调下面参数看效果。</p>
+
+    <div class="row">
+      <span>卡片样式</span>
+      <div class="seg" id="seg">
+        <button data-mode="frosted" class="active">半透明</button>
+        <button data-mode="solid">实色</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <span>不透明度</span>
+      <input type="range" id="opacity" min="20" max="100" value="62" />
+    </div>
+    <div class="note">滑块控制卡片白色底的浓度（含背后背景的可见度）。</div>
+
+    <div class="row" style="margin-top:18px;">
+      <span>背景模糊</span>
+      <input type="range" id="blur" min="0" max="30" value="14" />
+    </div>
+    <div class="note">背景模糊让文字更易读，调到 0 可看原图。</div>
+  </div>
+
+<script>
+  const card = document.getElementById('card');
+  const seg = document.getElementById('seg');
+  const opacity = document.getElementById('opacity');
+  const blur = document.getElementById('blur');
+
+  function apply(){
+    if(seg.querySelector('.active').dataset.mode === 'solid'){
+      card.style.background = 'rgba(255,255,255,1)';
+      card.style.backdropFilter = 'none';
+      card.style.webkitBackdropFilter = 'none';
+      card.style.borderColor = 'transparent';
+    } else {
+      const o = opacity.value/100;
+      card.style.background = `rgba(255,255,255,${o})`;
+      const b = blur.value;
+      card.style.backdropFilter = b>0 ? `blur(${b}px)` : 'none';
+      card.style.webkitBackdropFilter = b>0 ? `blur(${b}px)` : 'none';
+      card.style.borderColor = 'rgba(255,255,255,.55)';
+    }
+  }
+  seg.addEventListener('click', e=>{
+    if(e.target.tagName!=='BUTTON') return;
+    seg.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    apply();
+  });
+  opacity.addEventListener('input', apply);
+  blur.addEventListener('input', apply);
+  apply();
+</script>
+</body>
+</html>

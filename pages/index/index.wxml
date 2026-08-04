@@ -1,6 +1,6 @@
 <!--pages/index/index.wxml-->
 <view class="page">
-  <image class="bg" src="/images/bg/bg-quiz-court.png" mode="aspectFill"></image>
+  <image class="bg" src="/images/bg/bg-quiz-court.jpg" mode="aspectFill"></image>
 
   <view class="hero">
     <view class="ball">🎾</view>

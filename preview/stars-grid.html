@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>32 球星真人图 · 网格核验</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f7f6;padding:24px 14px 60px;}
+  h1{font-size:20px;color:#14534a;text-align:center;margin-bottom:4px;}
+  .sub{text-align:center;font-size:13px;color:#5b6b67;margin-bottom:20px;}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:760px;margin:0 auto;}
+  .cell{background:#fff;border-radius:14px;padding:10px 8px;text-align:center;box-shadow:0 4px 14px rgba(20,83,74,.08);}
+  .avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;background:#e3f0ed;margin:0 auto 6px;display:block;border:2px solid #e3f0ed;}
+  .code{font-size:13px;font-weight:800;color:#14534a;}
+  .g{font-size:11px;color:#9aa8a4;margin-left:3px;}
+  .nm{font-size:11px;color:#1f2d2a;margin-top:3px;line-height:1.3;height:28px;overflow:hidden;}
+  .bad{outline:2px solid #e74c3c;}
+  @media(max-width:560px){.grid{grid-template-columns:repeat(3,1fr);}.avatar{width:54px;height:54px;}}
+</style>
+</head>
+<body>
+  <h1>32 张球星真人图 · 核验</h1>
+  <div class="sub">来源：英文维基百科（Wikimedia Commons 自由授权）· 仅供学习娱乐演示</div>
+  <div class="grid" id="grid"></div>
+<script>
+  const stars = [
+    ["INTJ","male","诺瓦克·德约科维奇"],["INTJ","female","玛丽亚·莎拉波娃"],
+    ["INTP","male","丹尼尔·梅德韦杰夫"],["INTP","female","伊加·斯瓦泰克"],
+    ["ENTJ","male","罗杰·费德勒"],["ENTJ","female","塞雷娜·威廉姆斯"],
+    ["ENTP","male","卡洛斯·阿尔卡拉斯"],["ENTP","female","可可·高芙"],
+    ["INFJ","male","比约恩·博格"],["INFJ","female","比利·简·金"],
+    ["INFP","male","加埃尔·孟菲尔斯"],["INFP","female","安娜·伊万诺维奇"],
+    ["ENFJ","male","安德烈·阿加西"],["ENFJ","female","维纳斯·威廉姆斯"],
+    ["ENFP","male","若-威尔弗里德·特松加"],["ENFP","female","翁斯·贾贝乌尔"],
+    ["ISTJ","male","安迪·穆雷"],["ISTJ","female","西蒙娜·哈勒普"],
+    ["ISFJ","male","拉斐尔·纳达尔"],["ISFJ","female","大阪直美"],
+    ["ESTJ","male","皮特·桑普拉斯"],["ESTJ","female","施特菲·格拉芙"],
+    ["ESFJ","male","古斯塔沃·库尔滕"],["ESFJ","female","卡洛琳·沃兹尼亚奇"],
+    ["ISTP","male","斯坦·瓦林卡"],["ISTP","female","玛蒂娜·辛吉斯"],
+    ["ISFP","male","鲍里斯·贝克尔"],["ISFP","female","阿什莉·巴蒂"],
+    ["ESTP","male","吉米·康纳斯"],["ESTP","female","莫妮卡·塞莱斯"],
+    ["ESFP","male","安迪·罗迪克"],["ESFP","female","安娜·库尔尼科娃"]
+  ];
+  const grid = document.getElementById('grid');
+  stars.forEach(([code,g,name])=>{
+    const cell=document.createElement('div'); cell.className='cell';
+    const img=new Image();
+    const src=`../images/stars/${code}-${g}.jpg`;
+    img.src=src; img.className='avatar'; img.alt=name;
+    img.onerror=()=>{cell.classList.add('bad');};
+    const c=document.createElement('div'); c.innerHTML=`<span class="code">${code}</span><span class="g">${g==='male'?'♂':'♀'}</span>`;
+    const n=document.createElement('div'); n.className='nm'; n.textContent=name;
+    cell.append(img,c,n); grid.appendChild(cell);
+  });
+</script>
+</body>
+</html>

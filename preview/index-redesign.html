@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>首页 · 统一样式预览</title>
+<style>
+  :root{
+    --court-green:#14534a;
+    --court-green-light:#1d6e62;
+    --accent:#e8b84b;
+    --text:#1f2d2a;
+    --text-soft:#5b6b67;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:#eceff1;min-height:100vh;display:flex;justify-content:center;
+    align-items:flex-start;padding:32px 16px;
+  }
+  .phone{width:375px;height:812px;border-radius:44px;background:#000;padding:12px;box-shadow:0 24px 60px rgba(0,0,0,.28);}
+  .screen{
+    width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative;
+    background-image:url('../images/bg/bg-quiz-court.jpg');background-size:cover;background-position:center;
+    display:flex;flex-direction:column;align-items:center;
+    padding:50px 22px 40px;
+  }
+  .bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;}
+  .hero,.card,.start-btn,.quick-btn,.foot{position:relative;z-index:1;width:100%;}
+  .hero{text-align:center;}
+  .ball{font-size:64px;line-height:1;}
+  .title{margin-top:10px;font-size:34px;font-weight:700;color:var(--court-green);letter-spacing:1px;text-shadow:0 2px 8px rgba(255,255,255,.6);}
+  .subtitle{margin-top:8px;font-size:15px;color:var(--text-soft);text-shadow:0 2px 6px rgba(255,255,255,.6);}
+  .card{
+    margin-top:22px;width:100%;
+    background:rgba(255,255,255,.66);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.55);border-radius:18px;padding:22px 20px;
+    box-shadow:0 8px 30px rgba(20,83,74,.12);
+  }
+  .intro-line{font-size:15px;color:var(--text);line-height:2;}
+  .intro-line::before{content:"· ";color:var(--accent);font-weight:700;}
+  .gender-label{font-size:16px;font-weight:600;text-align:center;}
+  .gender-switch{margin:16px auto 6px;display:flex;background:#eef2f1;border-radius:999px;padding:5px;}
+  .g-opt{flex:1;text-align:center;padding:10px 0;border-radius:999px;font-size:15px;display:flex;align-items:center;justify-content:center;}
+  .g-opt .sym{font-size:20px;margin-right:6px;font-weight:700;}
+  .g-opt.f{color:#ff5fa2;}.g-opt.f.on{background:#ff5fa2;color:#fff;}
+  .g-opt.m{color:#2f74e0;}.g-opt.m.on{background:#2f74e0;color:#fff;}
+  .gender-tip{font-size:12px;color:#9aa8a4;text-align:center;margin-top:6px;}
+  .cat-title{font-size:16px;font-weight:700;margin-bottom:14px;}
+  .cat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .cat-item{border:1.5px solid #eee;border-radius:12px;padding:12px;display:flex;align-items:center;min-width:0;}
+  .cat-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+  .cat-name{margin-left:8px;font-size:15px;font-weight:700;}
+  .cat-letter{margin-left:auto;font-size:13px;font-weight:700;color:var(--text-soft);opacity:.7;}
+  .start-btn{
+    margin-top:30px;width:100%;background:var(--accent);color:#3a2c05;font-weight:700;
+    font-size:18px;border-radius:999px;padding:15px 0;text-align:center;
+    box-shadow:0 10px 24px rgba(232,184,75,.4);
+  }
+  .quick-btn{
+    margin-top:14px;width:100%;background:#fff;color:var(--court-green);font-weight:600;
+    font-size:16px;border-radius:999px;padding:13px 0;text-align:center;border:1.5px solid var(--court-green);
+  }
+  .foot{margin-top:18px;font-size:12px;color:#9aa8a4;text-align:center;}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="screen">
+      <div class="bg"></div>
+
+      <div class="hero">
+        <div class="ball">🎾</div>
+        <div class="title">网球 MBTI</div>
+        <div class="subtitle">测一测你的性格，找到本命网球球星</div>
+      </div>
+
+      <div class="card">
+        <div class="intro-line">16 道小题，测出你的 MBTI 类型</div>
+        <div class="intro-line">结合网球，看看你的「球风」像谁</div>
+        <div class="intro-line">再匹配一位男女各一的网球明星，找到共鸣</div>
+      </div>
+
+      <div class="card">
+        <div class="gender-label">想看哪种性别的球星？</div>
+        <div class="gender-switch">
+          <div class="g-opt f on"><span class="sym">♀</span><span>女生球星</span></div>
+          <div class="g-opt m"><span class="sym">♂</span><span>男生球星</span></div>
+        </div>
+        <div class="gender-tip">结果页也能随时切换</div>
+      </div>
+
+      <div class="card">
+        <div class="cat-title">四大性格家族</div>
+        <div class="cat-row">
+          <div class="cat-item" style="background:rgba(155,89,182,.12);border-color:#9b59b6;">
+            <div class="cat-dot" style="background:#9b59b6"></div>
+            <div class="cat-name" style="color:#9b59b6">分析家</div>
+            <div class="cat-letter">NT</div>
+          </div>
+          <div class="cat-item" style="background:rgba(52,152,219,.12);border-color:#3498db;">
+            <div class="cat-dot" style="background:#3498db"></div>
+            <div class="cat-name" style="color:#3498db">外交家</div>
+            <div class="cat-letter">NF</div>
+          </div>
+          <div class="cat-item" style="background:rgba(39,174,96,.12);border-color:#27ae60;">
+            <div class="cat-dot" style="background:#27ae60"></div>
+            <div class="cat-name" style="color:#27ae60">守护者</div>
+            <div class="cat-letter">SJ</div>
+          </div>
+          <div class="cat-item" style="background:rgba(212,160,23,.12);border-color:#d4a017;">
+            <div class="cat-dot" style="background:#d4a017"></div>
+            <div class="cat-name" style="color:#d4a017">探索者</div>
+            <div class="cat-letter">SP</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="start-btn">开始测试</div>
+      <div class="quick-btn">快速出结果（测试）</div>
+      <div class="foot">纯属娱乐 · 球星映射为示意整理</div>
+    </div>
+  </div>
+</body>
+</html>

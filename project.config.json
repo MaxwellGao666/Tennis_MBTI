@@ -5,7 +5,15 @@
     "ignore": [
       { "type": "folder", "value": "scripts" },
       { "type": "folder", "value": ".workbuddy" },
-      { "type": "file", "value": ".gitignore" }
+      { "type": "folder", "value": "preview" },
+      { "type": "file", "value": ".gitignore" },
+      { "type": "file", "value": "images/bg/bg-result-NT-green.png" },
+      { "type": "file", "value": "images/bg/bg-result-NF-gold.png" },
+      { "type": "file", "value": "images/bg/bg-result-SJ-blue.png" },
+      { "type": "file", "value": "images/bg/bg-result-SP-purple.png" },
+      { "type": "file", "value": "images/bg/bg-quiz-court.png" },
+      { "type": "file", "value": "images/stars/compare-federer.jpg" },
+      { "type": "file", "value": "images/stars/star-ai-sample.png" }
     ],
     "include": []
   },

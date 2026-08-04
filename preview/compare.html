@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>网球MBTI · 美化效果对比</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#eef1f5;color:#222;padding:24px;display:flex;flex-direction:column;align-items:center;gap:18px}
+  h1{font-size:20px}
+  .hint{font-size:13px;color:#666;max-width:440px;text-align:center;line-height:1.6}
+  .stage{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+  .phone{width:360px;height:720px;border-radius:28px;overflow:hidden;background-size:cover;background-position:center;box-shadow:0 12px 40px rgba(0,0,0,.18);position:relative;display:flex;flex-direction:column;padding:22px 18px;gap:12px}
+  .phone::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.20);z-index:0}
+  .phone>*{position:relative;z-index:1}
+  .hero{text-align:center;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.45)}
+  .type-code{font-size:40px;font-weight:800;letter-spacing:2px}
+  .type-name{font-size:15px;opacity:.95;margin-top:2px}
+  .card{background:rgba(255,255,255,.92);border-radius:14px;padding:12px 14px}
+  .card h3{font-size:13px;color:#555;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .num{display:inline-flex;width:20px;height:20px;border-radius:50%;background:#2f74e0;color:#fff;font-size:12px;align-items:center;justify-content:center;flex:0 0 auto}
+  .card p{font-size:13px;line-height:1.6;color:#333}
+  .gswitch{display:flex;gap:10px}
+  .gbtn{flex:1;text-align:center;padding:8px;border-radius:10px;background:rgba(255,255,255,.85);font-size:13px}
+  .gbtn.on{background:#ff5fa2;color:#fff}
+  .star-row{display:flex;gap:12px;align-items:center}
+  .star-photo{width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25);flex:0 0 auto}
+  .star-meta b{font-size:15px}
+  .star-meta span{font-size:12px;color:#666}
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
+  .abtn{padding:10px;border-radius:10px;border:none;font-size:13px;color:#fff;background:#2f74e0}
+  .abtn.alt{background:#ff5fa2}.abtn.ghost{background:rgba(0,0,0,.35)}
+  .panel{width:360px;display:flex;flex-direction:column;gap:14px}
+  .swatches{display:flex;gap:10px}
+  .sw{flex:1;height:54px;border-radius:12px;cursor:pointer;border:3px solid transparent}
+  .sw.on{border-color:#222}
+  .cmp{display:flex;flex-direction:column;gap:8px}
+  .cmp-row{display:flex;gap:10px}
+  .cmp figure{flex:1;margin:0;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.1)}
+  .cmp img{width:100%;height:160px;object-fit:cover;display:block}
+  .cmp figcaption{font-size:12px;padding:8px;text-align:center;color:#444;line-height:1.5}
+  .toggle{display:flex;gap:8px}
+  .toggle button{flex:1;padding:8px;border-radius:10px;border:1px solid #ccc;background:#fff;cursor:pointer;font-size:13px}
+  .toggle button.on{background:#2f74e0;color:#fff;border-color:#2f74e0}
+  .warn{font-size:12px;color:#b00;background:#fff3f3;border:1px solid #ffd0d0;border-radius:10px;padding:10px;line-height:1.6}
+  .note{font-size:11px;color:#999;margin-top:4px}
+</style>
+</head>
+<body>
+<h1>网球 MBTI · 美化效果对比</h1>
+<p class="hint">左侧是「结果页」模拟（示例类型 INTJ / 绿系 NT）。点击下方色卡可切换 4 种背景；下方并排对比「网上真人图 vs AI 插画」两种球星方案，供你决定 32 张球星图走哪条路。</p>
+<div class="stage">
+  <div class="phone" id="phone" style="background-image:url('../images/bg/bg-result-NT-blue.png')">
+    <div class="hero">
+      <div class="type-code">INTJ</div>
+      <div class="type-name">逻辑学家 · 你的本命球星</div>
+    </div>
+    <div class="card"><h3><span class="num">A</span>你的 MBTI</h3><p>独立、有远见，喜欢用逻辑拆解复杂问题，安静但意志坚定。</p></div>
+    <div class="card"><h3><span class="num">B</span>结合网球 · 你的球风</h3><p>发球精准、落点刁钻，像在下棋一样调动对手。</p></div>
+    <div class="gswitch">
+      <div class="gbtn">♀ 女生球星</div><div class="gbtn on">♂ 男生球星</div>
+    </div>
+    <div class="card">
+      <h3><span class="num">C</span>本命球星</h3>
+      <div class="star-row">
+        <img class="star-photo" id="phoneStar" src="../images/stars/star-ai-sample.png">
+        <div class="star-meta"><b id="phoneStarName">AI 风格化球星</b><br><span>男子网球 · 示例</span></div>
+      </div>
+      <p style="margin-top:8px">打法：底线控制 + 网前突击。共鸣点：都靠脑子打球。</p>
+    </div>
+    <div class="card"><h3><span class="num">D</span>球风建议</h3><p>多练发球变化，别总想一拍制胜，耐心周旋更稳。</p></div>
+    <div class="actions">
+      <button class="abtn">保存卡片</button><button class="abtn alt">分享</button>
+      <button class="abtn ghost">打赏</button><button class="abtn ghost">再测</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div>
+      <div style="font-size:13px;color:#555;margin-bottom:6px">① 切换结果页背景（4 色系）</div>
+      <div class="swatches">
+        <div class="sw on" style="background:#1d6e62" onclick="setBg('NT-green',this)" title="绿 = NT 分析家"></div>
+        <div class="sw" style="background:#d99a1f" onclick="setBg('NF-gold',this)" title="黄 = NF 外交家"></div>
+        <div class="sw" style="background:#2f74e0" onclick="setBg('SJ-blue',this)" title="蓝 = SJ 守护者"></div>
+        <div class="sw" style="background:#8b5cf6" onclick="setBg('SP-purple',this)" title="紫 = SP 探索者"></div>
+      </div>
+      <div class="note">绿=NT 分析家 / 黄=NF 外交家 / 蓝=SJ 守护者 / 紫=SP 探索者（与小程序 ROLE_THEME 一致）</div>
+    </div>
+
+    <div class="toggle">
+      <button id="tAI" class="on" onclick="setStar('ai')">手机里显示：AI 插画</button>
+      <button id="tWeb" onclick="setStar('web')">手机里显示：网上真人</button>
+    </div>
+
+    <div class="cmp">
+      <div style="font-size:13px;color:#555">② 球星方案对比（同样位置放图）</div>
+      <div class="cmp-row">
+        <figure><img src="../images/stars/compare-federer.jpg"><figcaption><b>网上真人图</b><br>费德勒（仅对比用）</figcaption></figure>
+        <figure><img src="../images/stars/star-ai-sample.png"><figcaption><b>AI 风格化插画</b><br>非真人 · 可商用</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="warn">⚠️ 网上真人图（费德勒）仅用于本次「效果对比」演示。<b>正式上线需获得肖像权 / 版权授权</b>；AI 风格化插画为非真人形象，可规避该风险，直接用于发布。</div>
+  </div>
+</div>
+
+<script>
+function setBg(key,el){
+  document.getElementById('phone').style.backgroundImage="url('../images/bg/bg-result-"+key+".png')";
+  document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+}
+function setStar(which){
+  var phone=document.getElementById('phoneStar');
+  var name=document.getElementById('phoneStarName');
+  if(which==='web'){
+    phone.src='../images/stars/compare-federer.jpg';
+    name.textContent='费德勒（网上真人）';
+    document.getElementById('tWeb').classList.add('on');
+    document.getElementById('tAI').classList.remove('on');
+  }else{
+    phone.src='../images/stars/star-ai-sample.png';
+    name.textContent='AI 风格化球星';
+    document.getElementById('tAI').classList.add('on');
+    document.getElementById('tWeb').classList.remove('on');
+  }
+}
+</script>
+</body>
+</html>
