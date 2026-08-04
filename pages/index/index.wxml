@@ -1,5 +1,7 @@
 <!--pages/index/index.wxml-->
 <view class="page">
+  <image class="bg" src="/images/bg/bg-quiz-court.png" mode="aspectFill"></image>
+
   <view class="hero">
     <view class="ball">🎾</view>
     <view class="title">网球 MBTI</view>
