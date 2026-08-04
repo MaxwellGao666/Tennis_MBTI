@@ -27,6 +27,49 @@
     <view class="gender-tip">结果页也能随时切换</view>
   </view>
 
+  <!-- 四大类颜色分类展示 -->
+  <view class="card cat-legend">
+    <view class="cat-title">四大性格家族</view>
+    <view class="cat-row">
+      <view class="cat-item" wx:for="{{catLegend}}" wx:key="key"
+            style="background:{{item.bg}};border-color:{{item.color}}">
+        <view class="cat-dot" style="background:{{item.color}}"></view>
+        <view class="cat-name" style="color:{{item.color}}">{{item.name}}</view>
+        <view class="cat-letter">{{item.letter}}</view>
+      </view>
+    </view>
+  </view>
+
   <button class="start-btn" bindtap="startTest">开始测试</button>
+
+  <!-- 快速出结果（测试用，跳过 16 题） -->
+  <button class="quick-btn" bindtap="openQuick">快速出结果（测试）</button>
   <view class="foot">纯属娱乐 · 球星映射为示意整理</view>
+
+  <!-- 快速出结果弹窗：16 型按四色分组 -->
+  <view wx:if="{{showQuick}}" class="quick-mask" bindtap="closeQuick">
+    <view class="quick-panel" catchtap="noop">
+      <view class="quick-title">快速出结果（测试）</view>
+      <view class="quick-desc">选择任一类型，直接跳转结果页（跳过 16 题）</view>
+
+      <scroll-view class="quick-scroll" scroll-y>
+        <view class="qg" wx:for="{{groups}}" wx:key="name" style="background:{{item.bg}}">
+          <view class="qg-head">
+            <text class="qg-dot" style="background:{{item.color}}"></text>
+            <text class="qg-name" style="color:{{item.color}}">{{item.name}}（{{item.letter}}）</text>
+          </view>
+          <view class="qg-types">
+            <view class="qg-chip" wx:for="{{item.types}}" wx:for-item="t" wx:key="code"
+                  data-type="{{t.code}}" bindtap="quickPick"
+                  style="border-color:{{t.color}}; color:{{t.color}}">
+              <text class="qg-code">{{t.code}}</text>
+              <text class="qg-nick">{{t.nickname}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <button class="quick-close" bindtap="closeQuick">关闭</button>
+    </view>
+  </view>
 </view>

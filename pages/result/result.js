@@ -1,19 +1,13 @@
 // pages/result/result.js
 const MBTI = require('../../data/mbti.js')
+const { ROLE_THEME, getRoleKey } = require('../../utils/mbti-role.js')
 const app = getApp()
 
 // 想用真实收款码：把一张二维码图片放到 images/reward-qr.png，
 // 再把下面这个常量设为 '/images/reward-qr.png' 即可。
 const REWARD_QR_PATH = ''
 
-// 经典 MBTI 四分类 -> 主题色（紫/黄/蓝/绿）
-// 分析家(NT)=绿  外交家(NF)=黄  守护者(SJ)=蓝  探索者(SP)=紫
-const ROLE_THEME = {
-  analyst:  { name: '分析家', primary: '#1d6e62', bg: '#e7f3f0' },
-  diplomat: { name: '外交家', primary: '#d99a1f', bg: '#fbf2dc' },
-  sentinel: { name: '守护者', primary: '#2f74e0', bg: '#e7f0fc' },
-  explorer: { name: '探索者', primary: '#8b5cf6', bg: '#f1eafd' }
-}
+// 经典 MBTI 四分类主题色已抽到 utils/mbti-role.js（ROLE_THEME / getRoleKey）
 
 // 稀有度 -> 颜色
 const RARITY_COLORS = {
@@ -21,16 +15,6 @@ const RARITY_COLORS = {
   '稀有': '#1d9e8f',
   '史诗': '#8b5cf6',
   '传说': '#d99a1f'
-}
-
-// 由 4 字母类型推导经典角色
-function getRoleKey(type) {
-  const n = type[1]
-  const t = type[2]
-  if (n === 'N' && t === 'T') return 'analyst'
-  if (n === 'N' && t === 'F') return 'diplomat'
-  if (n === 'S' && t === 'J') return 'sentinel'
-  return 'explorer'
 }
 
 Page({
@@ -44,9 +28,9 @@ Page({
     cardImg: '',
     showReward: false,
     rewardQr: REWARD_QR_PATH,
-    // 主题相关
-    themePrimary: '#1d6e62',
-    themeBg: '#e7f3f0',
+    // 主题相关（NT 分析家默认紫色）
+    themePrimary: '#9b59b6',
+    themeBg: '#f3e8f7',
     themeRoleName: '分析家',
     rarityColor: '#94a3b0'
   },
@@ -56,7 +40,7 @@ Page({
     const gender = options.gender || app.globalData.gender || 'female'
     const info = MBTI[type] || MBTI.INFP
     const star = info.stars[gender]
-    const roleKey = getRoleKey(info.code || type)
+    const roleKey = getRoleKey(type)
     const theme = ROLE_THEME[roleKey] || ROLE_THEME.analyst
     const rarityColor = RARITY_COLORS[info.rarity] || RARITY_COLORS['普通']
 
@@ -71,7 +55,7 @@ Page({
       star,
       starInitial: (star.name || '')[0] || '★',
       starImageOk: true,
-      themePrimary: theme.primary,
+      themePrimary: theme.color,
       themeBg: theme.bg,
       themeRoleName: theme.name,
       rarityColor
@@ -170,8 +154,8 @@ Page({
       } else {
         // 兜底：主题渐变 + 首字
         const grad = ctx.createLinearGradient(0, 0, W, HALF)
-        grad.addColorStop(0, theme.primary)
-        grad.addColorStop(1, this.darken(theme.primary, 0.22))
+        grad.addColorStop(0, theme.color)
+        grad.addColorStop(1, this.darken(theme.color, 0.22))
         ctx.fillStyle = grad
         ctx.fillRect(0, 0, W, HALF)
         ctx.textAlign = 'center'
@@ -198,7 +182,7 @@ Page({
 
       // MBTI 类型大字
       if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '4px'
-      ctx.fillStyle = theme.primary
+      ctx.fillStyle = theme.color
       ctx.font = 'bold 86px sans-serif'
       ctx.fillText(this.data.type, 40, HALF + 110)
       if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '0px'
@@ -220,12 +204,12 @@ Page({
       ctx.textAlign = 'left'
 
       // 角色标签
-      ctx.strokeStyle = theme.primary
+      ctx.strokeStyle = theme.color
       ctx.lineWidth = 2
       ctx.fillStyle = 'rgba(255,255,255,0)'
       this.roundRect(ctx, 168, HALF + 196, 130, 46, 23)
       ctx.stroke()
-      ctx.fillStyle = theme.primary
+      ctx.fillStyle = theme.color
       ctx.font = 'bold 24px sans-serif'
       ctx.textAlign = 'center'
       ctx.fillText(theme.name, 168 + 65, HALF + 227)
@@ -249,7 +233,7 @@ Page({
       this.roundRect(ctx, qrX - 8, qrY - 8, qrSize + 16, qrSize + 16, 16)
       ctx.stroke()
       // 二维码装饰点阵
-      ctx.fillStyle = theme.primary
+      ctx.fillStyle = theme.color
       const cell = 14, gap = 4
       for (let r = 0; r < 7; r++) {
         for (let c = 0; c < 7; c++) {
@@ -259,7 +243,7 @@ Page({
         }
       }
       // 三个定位角
-      ctx.strokeStyle = theme.primary
+      ctx.strokeStyle = theme.color
       ctx.lineWidth = 4
       ;[[qrX, qrY], [qrX + qrSize - 38, qrY], [qrX, qrY + qrSize - 38]].forEach(([x, y]) => {
         ctx.strokeRect(x, y, 34, 34)
