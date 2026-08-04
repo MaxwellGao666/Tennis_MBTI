@@ -1,0 +1,130 @@
+{
+  "chosen": [
+    {
+      "key": "INTJ-male",
+      "src": "File:Djokovic 2016.jpg",
+      "face_box": [
+        520,
+        360,
+        180,
+        180
+      ]
+    },
+    {
+      "key": "INTJ-female",
+      "src": "File:Collision 2024 - VR7 1035 (53801820852) (cropped).jpg",
+      "face_box": [
+        234,
+        171,
+        534,
+        534
+      ]
+    },
+    {
+      "key": "ENTJ-male",
+      "src": "File:FEDERER Roger-24x30-1998.jpg",
+      "face_box": [
+        139,
+        74,
+        391,
+        391
+      ]
+    },
+    {
+      "key": "ENTP-male",
+      "src": "File:25th Laureus World Sports Awards - Red Carpet - Carlos Alcaraz - 240422 192324 (cropped).jpg",
+      "face_box": [
+        133,
+        213,
+        486,
+        486
+      ]
+    },
+    {
+      "key": "ENFP-female",
+      "src": "File:Ons Jabeur (2024 DC Open) 08 (cropped).jpg",
+      "face_box": [
+        131,
+        305,
+        518,
+        518
+      ]
+    },
+    {
+      "key": "ISTJ-male",
+      "src": "File:2015 Australian Open - Andy Murray 12 (cropped).jpg",
+      "face_box": [
+        169,
+        216,
+        314,
+        314
+      ]
+    },
+    {
+      "key": "ESFJ-male",
+      "src": "File:Guga Kuerten.jpg",
+      "face_box": [
+        288,
+        253,
+        421,
+        421
+      ]
+    },
+    {
+      "key": "ESFJ-female",
+      "src": "File:Caroline Wozniacki (35449695422).jpg",
+      "face_box": [
+        361,
+        722,
+        235,
+        235
+      ]
+    },
+    {
+      "key": "ISFP-male",
+      "src": "File:Boris Becker 2007 amk.jpg",
+      "face_box": [
+        47,
+        216,
+        650,
+        650
+      ]
+    },
+    {
+      "key": "ISFP-female",
+      "src": "File:Ashleigh Barty (AUS) (9633237520).jpg",
+      "face_box": [
+        341,
+        40,
+        221,
+        221
+      ]
+    },
+    {
+      "key": "ESTP-male",
+      "src": "File:Jimmy Conners 1994.jpg",
+      "face_box": [
+        267,
+        193,
+        554,
+        554
+      ]
+    },
+    {
+      "key": "ESTP-female",
+      "src": "File:Monica Seles 1999.jpg",
+      "face_box": [
+        150,
+        219,
+        531,
+        531
+      ]
+    }
+  ],
+  "failed": [
+    "ENFJ-female",
+    "ISFJ-male",
+    "ESTJ-female",
+    "ESFP-male"
+  ]
+}
