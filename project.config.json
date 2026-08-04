@@ -2,7 +2,11 @@
   "compileType": "miniprogram",
   "libVersion": "trial",
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      { "type": "folder", "value": "scripts" },
+      { "type": "folder", "value": ".workbuddy" },
+      { "type": "file", "value": ".gitignore" }
+    ],
     "include": []
   },
   "setting": {
