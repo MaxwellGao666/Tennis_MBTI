@@ -6,6 +6,33 @@ const app = getApp()
 // 再把下面这个常量设为 '/images/reward-qr.png' 即可。
 const REWARD_QR_PATH = ''
 
+// 经典 MBTI 四分类 -> 主题色（紫/黄/蓝/绿）
+// 分析家(NT)=绿  外交家(NF)=黄  守护者(SJ)=蓝  探索者(SP)=紫
+const ROLE_THEME = {
+  analyst:  { name: '分析家', primary: '#1d6e62', bg: '#e7f3f0' },
+  diplomat: { name: '外交家', primary: '#d99a1f', bg: '#fbf2dc' },
+  sentinel: { name: '守护者', primary: '#2f74e0', bg: '#e7f0fc' },
+  explorer: { name: '探索者', primary: '#8b5cf6', bg: '#f1eafd' }
+}
+
+// 稀有度 -> 颜色
+const RARITY_COLORS = {
+  '普通': '#94a3a0',
+  '稀有': '#1d9e8f',
+  '史诗': '#8b5cf6',
+  '传说': '#d99a1f'
+}
+
+// 由 4 字母类型推导经典角色
+function getRoleKey(type) {
+  const n = type[1]
+  const t = type[2]
+  if (n === 'N' && t === 'T') return 'analyst'
+  if (n === 'N' && t === 'F') return 'diplomat'
+  if (n === 'S' && t === 'J') return 'sentinel'
+  return 'explorer'
+}
+
 Page({
   data: {
     type: '',
@@ -16,7 +43,12 @@ Page({
     starImageOk: true,
     cardImg: '',
     showReward: false,
-    rewardQr: REWARD_QR_PATH
+    rewardQr: REWARD_QR_PATH,
+    // 主题相关
+    themePrimary: '#1d6e62',
+    themeBg: '#e7f3f0',
+    themeRoleName: '分析家',
+    rarityColor: '#94a3a0'
   },
 
   onLoad(options) {
@@ -24,13 +56,25 @@ Page({
     const gender = options.gender || app.globalData.gender || 'female'
     const info = MBTI[type] || MBTI.INFP
     const star = info.stars[gender]
+    const roleKey = getRoleKey(info.code || type)
+    const theme = ROLE_THEME[roleKey] || ROLE_THEME.analyst
+    const rarityColor = RARITY_COLORS[info.rarity] || RARITY_COLORS['普通']
+
+    // 存到实例，供 canvas 使用
+    this.theme = theme
+    this.rarityColor = rarityColor
+
     this.setData({
       type: info.code || type,
       gender,
       info,
       star,
       starInitial: (star.name || '')[0] || '★',
-      starImageOk: true
+      starImageOk: true,
+      themePrimary: theme.primary,
+      themeBg: theme.bg,
+      themeRoleName: theme.name,
+      rarityColor
     })
     app.globalData.gender = gender
     wx.setStorageSync('gender', gender)
@@ -75,25 +119,28 @@ Page({
       canvas.height = H * dpr
       ctx.scale(dpr, dpr)
 
-      // 背景
+      const theme = this.theme || ROLE_THEME.analyst
+      const rColor = this.rarityColor || RARITY_COLORS['普通']
+
+      // 背景：主题色渐变
       const grad = ctx.createLinearGradient(0, 0, 0, H)
-      grad.addColorStop(0, '#14534a')
-      grad.addColorStop(1, '#0d3a33')
+      grad.addColorStop(0, theme.primary)
+      grad.addColorStop(1, this.darken(theme.primary, 0.18))
       ctx.fillStyle = grad
       ctx.fillRect(0, 0, W, H)
 
-      // 网球
+      // 网球装饰
       ctx.fillStyle = '#e8b84b'
       ctx.beginPath()
-      ctx.arc(W / 2, 210, 96, 0, Math.PI * 2)
+      ctx.arc(W / 2, 200, 84, 0, Math.PI * 2)
       ctx.fill()
-      ctx.strokeStyle = '#0d3a33'
-      ctx.lineWidth = 8
+      ctx.strokeStyle = this.darken(theme.primary, 0.3)
+      ctx.lineWidth = 7
       ctx.beginPath()
-      ctx.arc(W / 2, 210, 96, -0.5, 0.5)
+      ctx.arc(W / 2, 200, 84, -0.5, 0.5)
       ctx.stroke()
       ctx.beginPath()
-      ctx.arc(W / 2, 210, 96, Math.PI - 0.5, Math.PI + 0.5)
+      ctx.arc(W / 2, 200, 84, Math.PI - 0.5, Math.PI + 0.5)
       ctx.stroke()
 
       ctx.textAlign = 'center'
@@ -102,23 +149,36 @@ Page({
       if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '6px'
       ctx.fillStyle = '#ffffff'
       ctx.font = 'bold 92px sans-serif'
-      ctx.fillText(this.data.type, W / 2, 430)
+      ctx.fillText(this.data.type, W / 2, 410)
       if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '0px'
 
-      // 类型名
+      // 类型名 + 外号
       ctx.fillStyle = '#e8b84b'
-      ctx.font = '38px sans-serif'
-      ctx.fillText(this.data.info.name, W / 2, 486)
+      ctx.font = 'bold 40px sans-serif'
+      ctx.fillText(this.data.info.name + ' · ' + this.data.info.nickname, W / 2, 470)
+
+      // 稀有度 pill
+      ctx.fillStyle = rColor
+      this.roundRect(ctx, W / 2 - 90, 500, 180, 52, 26)
+      ctx.fill()
+      ctx.fillStyle = '#ffffff'
+      ctx.font = 'bold 30px sans-serif'
+      ctx.fillText(this.data.info.rarity, W / 2, 536)
 
       // 球星
       ctx.fillStyle = '#ffffff'
-      ctx.font = '30px sans-serif'
-      ctx.fillText('本命球星 · ' + this.data.star.name, W / 2, 556)
+      ctx.font = '34px sans-serif'
+      ctx.fillText('本命球星 · ' + this.data.star.name, W / 2, 624)
 
-      // 标语（自动换行）
-      ctx.fillStyle = 'rgba(255,255,255,0.88)'
-      ctx.font = '30px sans-serif'
-      this.wrapText(ctx, this.data.info.cardTagline, W / 2, 640, W - 150, 46)
+      // 球星简短介绍（自动换行）
+      ctx.fillStyle = 'rgba(255,255,255,0.90)'
+      ctx.font = '28px sans-serif'
+      this.wrapText(ctx, this.data.star.intro || '', W / 2, 690, W - 150, 44)
+
+      // 标语
+      ctx.fillStyle = 'rgba(255,255,255,0.72)'
+      ctx.font = '26px sans-serif'
+      this.wrapText(ctx, this.data.info.cardTagline, W / 2, 812, W - 150, 40)
 
       // 页脚
       ctx.fillStyle = 'rgba(255,255,255,0.6)'
@@ -137,6 +197,24 @@ Page({
         fail: () => {}
       })
     })
+  },
+
+  // 把 #rrggbb 颜色压暗 ratio(0~1)
+  darken(hex, ratio) {
+    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    if (!m) return hex
+    const f = (x) => Math.max(0, Math.round(parseInt(x, 16) * (1 - ratio)))
+    return `rgb(${f(m[1])},${f(m[2])},${f(m[3])})`
+  },
+
+  roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath()
+    ctx.moveTo(x + r, y)
+    ctx.arcTo(x + w, y, x + w, y + h, r)
+    ctx.arcTo(x + w, y + h, x, y + h, r)
+    ctx.arcTo(x, y + h, x, y, r)
+    ctx.arcTo(x, y, x + w, y, r)
+    ctx.closePath()
   },
 
   wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -182,7 +260,7 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: `我的网球 MBTI 是 ${this.data.type}·${this.data.info.name}，本命球星 ${this.data.star.name}`,
+      title: `我的网球 MBTI 是 ${this.data.type}·${this.data.info.name}「${this.data.info.nickname}」，本命球星 ${this.data.star.name}`,
       path: `/pages/result/result?type=${this.data.type}&gender=${this.data.gender}`,
       imageUrl: this.data.cardImg || ''
     }

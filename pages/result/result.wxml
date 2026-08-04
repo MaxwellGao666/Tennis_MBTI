@@ -1,21 +1,11 @@
-<!--pages/result/result.wxml-->
-<view class="page">
-  <!-- 头部：类型 -->
+<view class="page" style="--theme:{{themePrimary}}; background:{{themeBg}};">
+
+  <!-- 大字标题 -->
   <view class="hero">
+    <view class="rarity-badge" style="background:{{rarityColor}}">{{info.rarity}}</view>
     <view class="type-code">{{type}}</view>
-    <view class="type-name">{{info.name}}</view>
-  </view>
-
-  <!-- 区块 A：你的 MBTI -->
-  <view class="block">
-    <view class="block-title"><text class="num">A</text>你的 MBTI 是什么样的</view>
-    <view class="block-body">{{info.traits}}</view>
-  </view>
-
-  <!-- 区块 B：你的球风 -->
-  <view class="block">
-    <view class="block-title"><text class="num">B</text>结合网球 · 你的球风</view>
-    <view class="block-body">{{info.tennisStyle}}</view>
+    <view class="type-nick">{{info.name}} · {{info.nickname}}</view>
+    <view class="role-tag" style="color:{{themePrimary}}; border-color:{{themePrimary}}">{{themeRoleName}}</view>
   </view>
 
   <!-- 性别切换（♀ 粉 / ♂ 蓝） -->
@@ -28,6 +18,36 @@
           data-gender="male" bindtap="switchGender">
       <text class="gs-sym">♂</text><text class="gs-cap">男生球星</text>
     </view>
+  </view>
+
+  <!-- 可保存/分享的卡片区 -->
+  <view class="share-card" style="border-color:{{themePrimary}}">
+    <view class="sc-head">
+      <view class="sc-type">{{type}}</view>
+      <view class="sc-nick">{{info.nickname}}</view>
+      <view class="sc-rarity" style="background:{{rarityColor}}">{{info.rarity}}</view>
+    </view>
+    <view class="sc-star">
+      <image wx:if="{{starImageOk}}" class="sc-photo" src="{{star.image}}" mode="aspectFill" binderror="onStarImgError"></image>
+      <view wx:else class="sc-photo fallback">{{starInitial}}</view>
+      <view class="sc-star-meta">
+        <view class="sc-star-name">{{star.name}}</view>
+        <view class="sc-star-intro">{{star.intro}}</view>
+      </view>
+    </view>
+    <view class="sc-foot">网球 MBTI · 你的本命球星</view>
+  </view>
+
+  <!-- 区块 A：你的 MBTI -->
+  <view class="block">
+    <view class="block-title"><text class="num">A</text>你的 MBTI 是什么样的</view>
+    <view class="block-body">{{info.traits}}</view>
+  </view>
+
+  <!-- 区块 B：你的球风 -->
+  <view class="block">
+    <view class="block-title"><text class="num">B</text>结合网球 · 你的球风</view>
+    <view class="block-body">{{info.tennisStyle}}</view>
   </view>
 
   <!-- 区块 C：本命球星（详细） -->
@@ -55,7 +75,7 @@
     <view class="block-body">{{info.advice}}</view>
   </view>
 
-  <!-- 操作区（2x2 网格） -->
+  <!-- 操作区：2x2 网格（minmax(0,1fr) 防止右侧溢出） -->
   <view class="actions">
     <button class="act-btn primary" bindtap="saveCard">保存卡片到相册</button>
     <button class="act-btn share" open-type="share">分享给微信好友</button>
@@ -66,20 +86,17 @@
 
   <!-- 离屏卡片画布 -->
   <canvas type="2d" id="cardCanvas" class="card-canvas"></canvas>
-</view>
 
-<!-- 打赏弹窗 -->
-<view class="modal-mask" wx:if="{{showReward}}" bindtap="hideReward">
-  <view class="modal" catchtap="noop">
-    <view class="modal-title">打赏作者 💝</view>
-    <view class="qr-box" wx:if="{{rewardQr}}">
-      <image class="qr-img" src="{{rewardQr}}" mode="aspectFit"></image>
+  <!-- 打赏弹窗 -->
+  <view wx:if="{{showReward}}" class="modal-mask" bindtap="hideReward">
+    <view class="modal" catchtap="noop">
+      <view class="modal-title">打赏作者</view>
+      <view class="qr-box">
+        <image wx:if="{{rewardQr}}" class="qr-img" src="{{rewardQr}}" mode="aspectFit"></image>
+        <view wx:else class="qr-placeholder">微信收款码占位</view>
+      </view>
+      <view class="qr-tip">纯自愿 · 你的支持是我继续优化的动力</view>
+      <button class="modal-close" bindtap="hideReward">关闭</button>
     </view>
-    <view class="qr-placeholder" wx:else>
-      <view class="qr-box-inner">💝</view>
-      <view class="qr-tip">二维码占位 · 替换为你的微信收款码</view>
-    </view>
-    <view class="modal-sub">您的支持纯属自愿，不胜感激 ♥</view>
-    <button class="modal-close" bindtap="hideReward">关闭</button>
   </view>
 </view>
