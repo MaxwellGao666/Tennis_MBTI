@@ -32,6 +32,7 @@ Thumbs.db
 *.local
 
 # ===== 临时/废弃素材（不参与版本与打包）=====
+images/app-icon*
 images/stars/_raw/
 images/stars/compare-federer.jpg
 images/stars/star-ai-sample.png

@@ -4,7 +4,7 @@ const jpeg = require('jpeg-js');
 const MBTI = require('../data/mbti.js');
 
 const OUT_DIR = path.join(__dirname, '..', 'images', 'stars');
-const SIZE = 400;
+const SIZE = 360;
 
 // 5x7 bitmap font for A-Z, 0-9 and a few symbols
 const FONT5X7 = {
@@ -84,12 +84,12 @@ function drawText(buf, width, text, cy, scale, color) {
 }
 
 function generate(type, gender, index) {
-  // Color palette by MBTI family + gender tint
+  // Color palette by MBTI family + gender tint（对齐新四色：NT紫/NF蓝/SJ绿/SP黄）
   const families = {
-    'NT': ['#2a4d8a', '#4a6fa5'], // analysts - blue
-    'NF': ['#6b2d6b', '#8f4f8f'], // diplomats - purple
-    'SJ': ['#2d6b4a', '#4f8f6a'], // sentinels - green
-    'SP': ['#8f6a2f', '#b58d4a'], // explorers - gold
+    'NT': ['#7d3fa6', '#9b59b6'], // analysts - 紫
+    'NF': ['#2c7fc4', '#3498db'], // diplomats - 蓝
+    'SJ': ['#1e8c4c', '#27ae60'], // sentinels - 绿
+    'SP': ['#c08f12', '#d4a017'], // explorers - 黄
   };
   const family = type.slice(1, 3);
   const [maleBase, femaleBase] = families[family] || families['NT'];
@@ -122,7 +122,7 @@ function generate(type, gender, index) {
   drawText(buf, SIZE, symbol, 230, 5, [255, 255, 255]);
 
   const raw = { data: buf, width: SIZE, height: SIZE };
-  const encoded = jpeg.encode(raw, 90);
+  const encoded = jpeg.encode(raw, 60);
   const filename = path.join(OUT_DIR, `${type.toLowerCase()}-${gender}.jpg`);
   fs.writeFileSync(filename, encoded.data);
   console.log('Generated', filename);
